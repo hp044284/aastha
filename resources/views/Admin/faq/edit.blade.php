@@ -1,5 +1,5 @@
 @extends('Admin.Layout.index')
-@section('title', 'Create FAQ')
+@section('title', 'Edit FAQ')
 @section('content')
 
 <div class="page-wrapper">
@@ -11,7 +11,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="#"><i class="bx bx-home-alt"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Create FAQ</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit FAQ</li>
                     </ol>
                 </nav>
             </div>
@@ -20,12 +20,28 @@
 
         <!-- Form Card -->
         <div class="card">
-            <div class="card-header">Create FAQ</div>
+            <div class="card-header">Edit FAQ</div>
             <div class="card-body">
                 {!! html()->modelForm($entity, 'put', route('faqs.update', $entity->id))
                     ->attribute('id', 'edit-form')
                     ->class('row g-3 needs-validation')
                     ->open() !!}
+
+                    <div class="col-md-6">
+                        {!! html()->label('Category')->for('category')->class('form-label') !!}
+                        {!! html()->select('category_id', [
+                                'appointments' => 'Appointments',
+                                'patient_care' => 'Patient Care',
+                                'medical_services' => 'Medical Services',
+                                'insurance_billing' => 'Insurance & Billing',
+                                'emergency_services' => 'Emergency Services',
+                                'general_information' => 'General Information',
+                            ])
+                            ->id('category')
+                            ->class('form-select')
+                            ->required()
+                        !!}
+                    </div>
 
                     <div class="col-md-6">
                         {!! html()->label('Question')->for('question')->class('form-label') !!}
@@ -36,7 +52,7 @@
                             ->required() !!}
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         {!! html()->label('Answer')->for('answer')->class('form-label') !!}
                         {!! html()->textarea('answer')
                             ->id('answer')

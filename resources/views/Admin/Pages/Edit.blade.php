@@ -131,7 +131,11 @@
 
         $('#edit-form').submit(function(e)
         {
-            e.preventDefault()
+            e.preventDefault();
+            if (typeof CKEDITOR !== 'undefined' && CKEDITOR.instances['Description']) 
+            {
+                CKEDITOR.instances['Description'].updateElement();
+            }
             const formData = new FormData(this);
             formData.append('id',"{{ $entity->id }}")
 

@@ -13,11 +13,14 @@
         {{-- If editing & old images exist --}}
         @if(!empty($value))
             @foreach((array) $value as $img)
+                @php
+                    $imgSrc = $is_store ? asset('storage/' . $img) : asset($img);
+                @endphp
                 <div class="image-item">
                     <img 
-                        src="{{ asset($img) }}" 
+                        src="{{ $imgSrc }}" 
                         alt="preview"
-                        onerror="this.onerror=null;this.src='{{ asset('assets/images/default-image.png') }}';"
+                        
                     >
                     <button type="button" class="remove-btn">&times;</button>
                 </div>

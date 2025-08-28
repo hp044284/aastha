@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Models\{
     Blog,
     User,
-    Product,
     Service,
     Enquiry,
     Review,
@@ -22,7 +21,6 @@ class DashboardController extends Controller
             $Role_Id = $Auth_User->role_id;
             $Total_Users = User::where('Role_id',3)->count();
             $Total_Blogs = Blog::count();
-            $Total_Products = Product::count();
             $Total_Services = Service::count();
             $Total_Enquiries = Enquiry::count();
             $Total_Blog_Reviews = Review::where('Review_Type','Blog')->count();
@@ -32,12 +30,11 @@ class DashboardController extends Controller
                 'Blog_Can' => $Auth_User->HasPermission('Blogs', 'Is_Read'),
                 'User_Can' => $Auth_User->HasPermission('Users', 'Is_Read'),
                 'Review_Can' => $Auth_User->HasPermission('Reviews', 'Is_Read'),
-                'Product_Can' => $Auth_User->HasPermission('Products', 'Is_Read'),
                 'Service_Can' => $Auth_User->HasPermission('Services', 'Is_Read'),
                 'Enquiry_Can' => $Auth_User->HasPermission('Enquiries', 'Is_Read'),
             ]);
 
-            return view('Admin.Dashboard.index',compact('Auth_User','Role_Id','User_Id','Total_Users','Total_Blogs','Total_Products','Total_Services','Total_Enquiries','Total_Blog_Reviews','Total_Product_Reviews'));
+            return view('Admin.Dashboard.index',compact('Auth_User','Role_Id','User_Id','Total_Users','Total_Blogs','Total_Services','Total_Enquiries','Total_Blog_Reviews','Total_Product_Reviews'));
         } 
         catch (\Exception $e) 
         {

@@ -52,10 +52,10 @@ class ServiceCategory extends Model
     /**
      * Get the parent category.
      */
-    public function Parent()
-    {
-        return $this->belongsTo(ServiceCategory::class, 'Parent_Id');
-    }
+    // public function Parent()
+    // {
+    //     return $this->belongsTo(ServiceCategory::class, 'Parent_Id');
+    // }
 
     /**
      * Get the child categories.
@@ -63,5 +63,13 @@ class ServiceCategory extends Model
     public function Children()
     {
         return $this->hasMany(ServiceCategory::class, 'Parent_Id');
+    }
+
+    /**
+     * Get the parent service for this category.
+     */
+    public function service()
+    {
+        return $this->hasMany(Service::class, 'category_id');
     }
 }

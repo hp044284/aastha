@@ -73,11 +73,11 @@
                         </a>
                         <div class="dropdown-menu-custom" id="aboutDropdownMenu">
                             <div class="dropdown-content">
-                                <a class="dropdown-item" href="about-us"> <i class="fas fa-info-circle me-2"></i>About Us </a>
-                                <a class="dropdown-item" href="mission-and-vision"> <i class="fas fa-eye me-2"></i>Mission & Vision </a>
+                                <a class="dropdown-item" href="{{ route('home','about-us') }}"> <i class="fas fa-info-circle me-2"></i>About Us </a>
+                                <a class="dropdown-item" href="{{ route('home','vision') }}"> <i class="fas fa-eye me-2"></i>Mission & Vision </a>
                                 <a class="dropdown-item" href="news-and-media"> <i class="fas fa-newspaper me-2"></i>News & Media </a>
-                                <a class="dropdown-item" href="our-teams"> <i class="fas fa-users me-2"></i>Our Team </a>
-                                <a class="dropdown-item" href="our-doctors"> <i class="fas fa-user-md me-2"></i>Our Doctors </a>
+                                <a class="dropdown-item" href="{{ route('web.doctors.our-teams') }}"> <i class="fas fa-users me-2"></i>Our Team </a>
+                                <a class="dropdown-item" href="{{ route('web.doctors.index') }}"> <i class="fas fa-user-md me-2"></i>Our Doctors </a>
                             </div>
                         </div>
                     </li>
@@ -99,48 +99,18 @@
                                                     <h5><i class="fas fa-stethoscope me-2"></i>Our Services</h5>
                                                 </div>
                                                 <ul class="service-categories">
-                                                    <li class="category-item active" data-category="pediatrics">
-                                                        <a href="#pediatrics">
-                                                            <i class="fas fa-baby me-2"></i>
-                                                            Pediatrics & Child Care
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-item" data-category="womens-health">
-                                                        <a href="#womens-health">
-                                                            <i class="fas fa-female me-2"></i>
-                                                            Women's Health
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-item" data-category="surgery">
-                                                        <a href="#surgery">
-                                                            <i class="fas fa-cut me-2"></i>
-                                                            Surgical Services
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-item" data-category="diagnostics">
-                                                        <a href="#diagnostics">
-                                                            <i class="fas fa-microscope me-2"></i>
-                                                            Diagnostics & Imaging
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-item" data-category="emergency">
-                                                        <a href="#emergency">
-                                                            <i class="fas fa-ambulance me-2"></i>
-                                                            Emergency Care
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-item" data-category="specialties">
-                                                        <a href="#specialties">
-                                                            <i class="fas fa-heart me-2"></i>
-                                                            Medical Specialties
-                                                            <i class="fas fa-chevron-right ms-auto"></i>
-                                                        </a>
-                                                    </li>
+                                                    @php
+                                                        $firstCategorySlug = isset($service_categories[0]) ? $service_categories[0]['Slug'] : '';
+                                                    @endphp
+                                                    @foreach($service_categories as $index => $category)
+                                                        <li class="category-item {{ $index === 0 ? 'active' : '' }}" data-category="{{ $category['Slug'] }}">
+                                                            <a href="#{{ $category['Slug'] }}">
+                                                                <i class="{{ $category['Icon'] }} me-2"></i>
+                                                                {{ $category['Title'] }}
+                                                                <i class="fas fa-chevron-right ms-auto"></i>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
@@ -148,259 +118,51 @@
                                         <!-- Right Side - Subcategories -->
                                         <div class="col-lg-8">
                                             <div class="megamenu-subcategories">
-                                                <!-- Pediatrics Subcategories -->
-                                                <div class="subcategory-content active" id="pediatrics-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-baby me-2"></i>Pediatrics & Child Care</h6>
-                                                        <p class="text-muted">Comprehensive healthcare for children from birth to adolescence</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#general-pediatrics"><i class="fas fa-child me-2"></i>General Pediatrics</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#neonatology"><i class="fas fa-baby-carriage me-2"></i>Neonatology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#pediatric-icu"><i class="fas fa-procedures me-2"></i>Pediatric ICU</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#child-vaccination"><i class="fas fa-syringe me-2"></i>Child Vaccination</a>
-                                                                </li>
-                                                            </ul>
+                                                @foreach($service_categories as $index => $category)
+                                                    <div class="subcategory-content {{ $index === 0 ? 'active' : '' }}" id="{{ $category['Slug'] }}-content">
+                                                        <div class="subcategory-header">
+                                                            <h6>
+                                                                <i class="{{ $category['Icon'] }} me-2"></i>
+                                                                {{ $category['Title'] }}
+                                                            </h6>
+                                                            @if(!empty($category['Subtitle']))
+                                                                <p class="text-muted">{{ $category['Subtitle'] }}</p>
+                                                            @endif
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#pediatric-surgery"><i class="fas fa-cut me-2"></i>Pediatric Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#child-nutrition"><i class="fas fa-apple-alt me-2"></i>Child Nutrition</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#developmental-care"><i class="fas fa-brain me-2"></i>Developmental Care</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#pediatric-emergency"><i class="fas fa-first-aid me-2"></i>Pediatric Emergency</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                        @if(!empty($category['service']) && count($category['service']) > 0)
+                                                            @php
+                                                                $children = $category['service'];
+                                                                $half = ceil(count($children) / 2);
+                                                                $chunks = array_chunk($children, $half);
+                                                            @endphp
+                                                            <div class="row g-3">
+                                                                @foreach($chunks as $chunk)
+                                                                    <div class="col-md-6">
+                                                                        <ul class="subcategory-list">
+                                                                            @foreach($chunk as $child)
+                                                                                <li>
+                                                                                    <a href="{{ route('web.services.detail', $child['slug']) }}">
+                                                                                        {{-- No icon in child, so skip icon --}}
+                                                                                        {{ $child['title'] }}
+                                                                                    </a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @else
+                                                            <div class="row g-3">
+                                                                <div class="col-12">
+                                                                    <p class="text-muted">No subcategories available.</p>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                </div>
-
-                                                <!-- Women's Health Subcategories -->
-                                                <div class="subcategory-content" id="womens-health-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-female me-2"></i>Women's Health</h6>
-                                                        <p class="text-muted">Complete healthcare solutions for women at every stage of life</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#obstetrics"><i class="fas fa-baby me-2"></i>Obstetrics</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#gynecology"><i class="fas fa-female me-2"></i>Gynecology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#fertility-treatment"><i class="fas fa-heart me-2"></i>Fertility Treatment</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#prenatal-care"><i class="fas fa-baby-carriage me-2"></i>Prenatal Care</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#maternity-care"><i class="fas fa-home me-2"></i>Maternity Care</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#womens-surgery"><i class="fas fa-cut me-2"></i>Women's Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#breast-care"><i class="fas fa-ribbon me-2"></i>Breast Care</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#menopause-care"><i class="fas fa-leaf me-2"></i>Menopause Care</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Surgical Services Subcategories -->
-                                                <div class="subcategory-content" id="surgery-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-cut me-2"></i>Surgical Services</h6>
-                                                        <p class="text-muted">Advanced surgical procedures with state-of-the-art technology</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#general-surgery"><i class="fas fa-cut me-2"></i>General Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#laparoscopic-surgery"><i class="fas fa-microscope me-2"></i>Laparoscopic Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#orthopedic-surgery"><i class="fas fa-bone me-2"></i>Orthopedic Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#cardiac-surgery"><i class="fas fa-heartbeat me-2"></i>Cardiac Surgery</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#neurosurgery"><i class="fas fa-brain me-2"></i>Neurosurgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#plastic-surgery"><i class="fas fa-magic me-2"></i>Plastic Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#ent-surgery"><i class="fas fa-head-side-mask me-2"></i>ENT Surgery</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#eye-surgery"><i class="fas fa-eye me-2"></i>Eye Surgery</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Diagnostics Subcategories -->
-                                                <div class="subcategory-content" id="diagnostics-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-microscope me-2"></i>Diagnostics & Imaging</h6>
-                                                        <p class="text-muted">Comprehensive diagnostic services with latest technology</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#pathology"><i class="fas fa-vial me-2"></i>Pathology Lab</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#radiology"><i class="fas fa-x-ray me-2"></i>Radiology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#ct-scan"><i class="fas fa-circle me-2"></i>CT Scan</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#mri"><i class="fas fa-magnet me-2"></i>MRI</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#ultrasound"><i class="fas fa-wave-square me-2"></i>Ultrasound</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#ecg"><i class="fas fa-heartbeat me-2"></i>ECG</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#blood-tests"><i class="fas fa-tint me-2"></i>Blood Tests</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#health-checkup"><i class="fas fa-clipboard-check me-2"></i>Health Checkup</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Emergency Care Subcategories -->
-                                                <div class="subcategory-content" id="emergency-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-ambulance me-2"></i>Emergency Care</h6>
-                                                        <p class="text-muted">24/7 emergency medical services and critical care</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#emergency-room"><i class="fas fa-hospital me-2"></i>Emergency Room</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#trauma-care"><i class="fas fa-first-aid me-2"></i>Trauma Care</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#critical-care"><i class="fas fa-procedures me-2"></i>Critical Care ICU</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#ambulance"><i class="fas fa-ambulance me-2"></i>Ambulance Service</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#cardiac-emergency"><i class="fas fa-heartbeat me-2"></i>Cardiac Emergency</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#stroke-care"><i class="fas fa-brain me-2"></i>Stroke Care</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#poison-control"><i class="fas fa-shield-alt me-2"></i>Poison Control</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#burn-care"><i class="fas fa-fire me-2"></i>Burn Care</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Medical Specialties Subcategories -->
-                                                <div class="subcategory-content" id="specialties-content">
-                                                    <div class="subcategory-header">
-                                                        <h6><i class="fas fa-heart me-2"></i>Medical Specialties</h6>
-                                                        <p class="text-muted">Specialized medical care from expert consultants</p>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#cardiology"><i class="fas fa-heartbeat me-2"></i>Cardiology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#neurology"><i class="fas fa-brain me-2"></i>Neurology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#orthopedics"><i class="fas fa-bone me-2"></i>Orthopedics</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#dermatology"><i class="fas fa-hand-paper me-2"></i>Dermatology</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul class="subcategory-list">
-                                                                <li>
-                                                                    <a href="#gastroenterology"><i class="fas fa-stomach me-2"></i>Gastroenterology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#pulmonology"><i class="fas fa-lungs me-2"></i>Pulmonology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#endocrinology"><i class="fas fa-dna me-2"></i>Endocrinology</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="#psychiatry"><i class="fas fa-head-side-brain me-2"></i>Psychiatry</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>

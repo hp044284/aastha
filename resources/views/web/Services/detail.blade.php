@@ -1,345 +1,473 @@
 <x-web.layout>
-    @push('meta')
-    @php
-       $metaTitle = $seo_pages->meta_title ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities';
-       $metaDescription = $seo_pages->meta_description ?? 'Explore a wide range of professional security and networking services by Unisafe Securities. We offer CCTV camera installation, biometric attendance systems, fire alarms, EPABX, access control, and more. Trusted solutions for homes, offices, and businesses.';
-       $metaKeywords = $seo_pages->meta_keywords ?? 'CCTV installation services, biometric attendance, fire alarm systems, EPABX solutions, video door phone, access control, computer networking, security systems Jaipur, Unisafe Securities services';
-       $ogImage = !empty($seo_pages->og_image) ? asset('Uploads/Page/' . $seo_pages->og_image) : (!empty($settings['Site_Logo']) ? asset('Uploads/Logo/' . $settings['Site_Logo']) : asset('Uploads/Logo/logo.png'));
-       $twitterImage = $ogImage;
-       $currentUrl = $seo_pages->canonical_url ?? url()->current();
-       $siteName = $settings['Site_Name'] ?? 'Unisafe Securities';
-       $sameAs = array_filter([
-        $settings['Facebook_Link'] ?? null,
-        $settings['Twitter_Link'] ?? null,
-        $settings['Linkedin_Link'] ?? null,
-        $settings['Instagram_Link'] ?? null,
-        $settings['Pinterest_Link'] ?? null,
-        $settings['Youtube_Link'] ?? null,
-        ]);
-    @endphp
-    <!-- Character Set -->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!-- Viewport and Compatibility -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Title -->
-    <title>{{ $seo_pages->metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities' }}</title>
-    <!-- metas -->
-    <meta name="title" content="{{ Str::limit($metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities', 60) }}">
-    <meta name="keywords" content="{{ Str::limit($metaKeywords ?? 'CCTV installation services, biometric attendance, fire alarm systems, EPABX solutions, video door phone, access control, computer networking, security systems Jaipur, Unisafe Securities services', 255, '') }}">
-    <meta name="description" content="{{ Str::limit($metaDescription ?? 'Explore a wide range of professional security and networking services by Unisafe Securities. We offer CCTV camera installation, biometric attendance systems, fire alarms, EPABX, access control, and more. Trusted solutions for homes, offices, and businesses.', 160, '') }}">
-    <!-- Google Site Verification -->
-    <meta name="google-site-verification" content="{{ $settings['Google_Site_Verification'] ?? '' }}" />
-    <!-- Bing Site Verification -->
-    <meta name="msvalidate.01" content="{{ $settings['Ms_Validate'] ?? '' }}" />
-    <!-- Yandex Site Verification -->
-    <meta name="yandex-verification" content="{{ $settings['Yandex_Site_Verification'] ?? '' }}" />
-    <!-- Baidu Site Verification -->
-    <meta name="baidu-site-verification" content="{{ $settings['Baidu_Site_Verification'] ?? '' }}" />
-    <!-- Publisher -->
-    <meta name="publisher" content="{{ $settings['Publisher'] ?? $siteName }}" />
-    <!-- Copyright -->
-    <meta name="copyright" content="{{ $settings['Copy_Right'] ?? $siteName }}" />
-    <!-- Document State -->
-    <meta name="document-state" content="{{ $settings['Document_State'] ?? 'Dynamic' }}">
-    <!--  Canonical -->
-    <link rel="canonical" href="{{ $currentUrl }}" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ !empty($settings['Shortcut_Icon']) ? asset('Uploads/Logo/' . $settings['Shortcut_Icon']) : asset('Uploads/Logo/favicon.png') }}">
-    <!-- apple touch icon -->
-    <!-- apple touch icon 57x57 -->
-    <link rel="apple-touch-icon" sizes="57x57" href="{{ !empty($settings['Apple_Touch_Icon_57']) ? asset('Uploads/Logo/' . $settings['Apple_Touch_Icon_57']) : asset('Uploads/Logo/apple-touch-icon-57x57.png') }}" />
-    <!-- apple touch icon 72x72 -->
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ !empty($settings['Apple_Touch_Icon_72']) ? asset('Uploads/Logo/' . $settings['Apple_Touch_Icon_72']) : asset('Uploads/Logo/apple-touch-icon-72x72.png') }}" />
-    <!-- apple touch icon 114x114 -->
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ !empty($settings['Apple_Touch_Icon_114']) ? asset('Uploads/Logo/' . $settings['Apple_Touch_Icon_114']) : asset('Uploads/Logo/apple-touch-icon-114x114.png') }}" />
-    <!-- apple touch icon 144x144 -->
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ !empty($settings['Apple_Touch_Icon_144']) ? asset('Uploads/Logo/' . $settings['Apple_Touch_Icon_144']) : asset('Uploads/Logo/apple-touch-icon-144x144.png') }}" />
-    <!-- apple touch icon 180x180 -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ !empty($settings['Apple_Touch_Icon_180']) ? asset('Uploads/Logo/' . $settings['Apple_Touch_Icon_180']) : asset('Uploads/Logo/apple-touch-icon-180x180.png') }}" />
-    <!-- Robots -->
-    <meta name="robots" content="{{($settings['Robots_First'] ?? '') . ',' . ($settings['Robots_Second'] ?? 'index, follow')}}">
-    <meta name="googlebot" content="{{ $seo_pages['robots_index'] ?? $settings['Google_Bot'] ?? 'index, follow' }}" />
-    <meta name="yahooseeker" content="{{ $seo_pages['robots_index'] ?? $settings['Yahoo_Seeker'] ?? 'index, follow' }}" />
-    <meta name="msnbot" content="{{ $seo_pages['robots_index'] ?? $settings['Msn_Bot'] ?? 'index, follow' }}" />
-    <!-- Distribution -->
-    <meta name="distribution" content="Global" />
-    <!-- Revisit After -->
-    <meta name="revisit-after" content="{{ $settings['Revisit_After'] ?? '7 days' }}" />
-    <!-- Author -->
-    <meta name="author" content="{{ $settings['Author'] ?? $siteName }}">
-    <!-- Rating -->
-    <meta name="rating" content="general" />
-    <!-- Language -->
-    <meta name="language" content="{{ $settings['Language'] ?? 'en' }}" />
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $settings['Google_Analytics_ID'] ?? '' }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '{{ $settings['Google_Analytics_ID'] ?? '' }}');
-    </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ $settings['Google_Tag_Manager_ID'] ?? '' }}');</script>
-    <!-- Google Tag Manager No Script -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $settings['Google_Tag_Manager_ID'] ?? '' }}"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- Open Graph data -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ $metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities' }}"/>
-    <meta property="og:url" content="{{ $currentUrl }}"/>
-    <meta property="og:image" content="{{ $ogImage }}"/>
-    <meta property="og:description" content="{{ $metaDescription ?? 'Explore a wide range of professional security and networking services by Unisafe Securities. We offer CCTV camera installation, biometric attendance systems, fire alarms, EPABX, access control, and more. Trusted solutions for homes, offices, and businesses.' }}"/>
-    <meta property="og:site_name" content="{{ $siteName }}"/>
-    <meta property="og:image:alt" content="{{ $metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities' }}"/>
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:site" content="@UnisafeSecurities"/>
-    <meta name="twitter:creator" content="@kkchoudharyIN"/>
-    <meta name="twitter:url" content="{{ $currentUrl }}"/>
-    <meta name="twitter:title" content="{{ $metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities' }}"/>
-    <meta name="twitter:description" content="{{ $metaDescription ?? 'Explore a wide range of professional security and networking services by Unisafe Securities. We offer CCTV camera installation, biometric attendance systems, fire alarms, EPABX, access control, and more. Trusted solutions for homes, offices, and businesses.' }}"/>
-    <meta name="twitter:image" content="{{ $twitterImage }}"/>
-    <meta name="twitter:image:alt" content="{{ $metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities' }}"/>
-    <!--  Business Meta-->
-    <meta property="business:contact_data:street_address" content="{{ $settings['Business_Street_Address'] ?? '38, Nand Vihar Colony, Tonk Road, Jaipur 302033' }}">
-    <meta property="business:contact_data:locality" content="{{ $settings['Business_Locality'] ?? 'Sanganer' }}">
-    <meta property="business:contact_data:address_locality" content="{{ $settings['Business_City'] ?? 'Jaipur' }}">
-    <meta property="business:contact_data:region" content="{{ $settings['Business_Region'] ?? 'Rajasthan' }}">
-    <meta property="business:contact_data:postal_code" content="{{ $settings['Business_Postal_Code'] ?? '302033' }}">
-    <meta property="business:contact_data:country_name" content="{{ $settings['Business_Country_Name'] ?? 'India' }}">
-    <meta name="email" content="{{ $settings['Support_Email'] ?? $settings['Support_Email'] ?? 'info@unisafesecurities.com' }}"/>
-    <meta name="version" content="{{ $settings['App_Version'] ?? '1.0' }}" />
-
-<script type="application/ld+json">
-{!! json_encode([
-    "@context" => "https://schema.org",
-    "@type" => "WebSite",
-    "name" => $metaTitle ?? 'Security & Networking Services | CCTV, Biometric, Fire Alarm, EPABX – Unisafe Securities',
-    "url" => $currentUrl,
-    "description" => $metaDescription ?? 'Explore a wide range of professional security and networking services by Unisafe Securities. We offer CCTV camera installation, biometric attendance systems, fire alarms, EPABX, access control, and more. Trusted solutions for homes, offices, and businesses.',
-    "inLanguage" => "en",
-    "publisher" => [
-        "@type" => $settings['Organization_Type'] ?? 'Organization',
-        "name" => $settings['Alternate_Name'] ?? $siteName,
-        "logo" => [
-            "@type" => "ImageObject",
-            "url" => !empty($settings['Shortcut_Icon']) ? asset('Uploads/Logo/' . $settings['Shortcut_Icon']) : asset('Uploads/Logo/favicon.png'),
-            "width" => 60,
-            "height" => 60
-        ]
-    ],
-    "image" => $ogImage,
-    "foundingDate" => $settings['Founding_Date'] ?? '2018-10-10',
-    "founder" => [
-        "@type" => $settings['Founder_Type'] ?? 'Person',
-        "name" => $settings['Founder_Name'] ?? 'Kamlesh Choudhary'
-    ],
-    "mainEntityOfPage" => [
-        "@type" => "WebPage",
-        "@id" => $currentUrl
-    ],
-    "geo" => [
-        "@type" => "GeoCoordinates",
-        "latitude" => $settings['Business_Latitude'] ?? '',
-        "longitude" => $settings['Business_Longitude'] ?? ''
-    ],
-    "openingHoursSpecification" => [[
-        "@type" => "OpeningHoursSpecification",
-        "dayOfWeek" => ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens" => "10:00",
-        "closes" => "19:00"
-    ]],
-    "hasMap" => $settings['Google_Map_Link'] ?? '',
-    "contactPoint" => [[
-        "@type" => $settings['Contact_Point'] ?? 'ContactPoint',
-        "telephone" => $settings['Support_Number'] ?? '',
-        "email" => $settings['Support_Email'] ?? ($settings['Email'] ?? 'info@unisafesecurities.com'),
-        "contactType" => "customer support",
-        "areaServed" => "IN",
-        "availableLanguage" => [$settings['Available_Languages'] ?? 'en']
-    ]],
-    "address" => [
-        "@type" => $settings['Business_Address_Type'] ?? 'PostalAddress',
-        "name" => $settings['Business_Name'] ?? 'Unisafe Securities',
-        "streetAddress" => ($settings['Business_Street_Address'] ?? '') . ', ' . ($settings['Business_Landmark'] ?? '38, Nand Vihar Colony, Tonk Road, Near Pinjarapol Gausala'),
-        "addressLocality" => ($settings['Business_Locality'] ?? '') . ', ' . ($settings['Business_City'] ?? 'Sanganer, Jaipur'),
-        "addressRegion" => $settings['Business_Region'] ?? 'Rajasthan',
-        "postalCode" => $settings['Business_Postal_Code'] ?? '302033',
-        "addressCountry" => $settings['Business_Country_Name'] ?? 'India'
-    ],
-    "sameAs" => array_values($sameAs)
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
-</script>             
-    @endpush
-    <!-- Page Title ================================================== -->
-    <section class="unisafe-hero-wrapper">
-        <div class="unisafe-floating-bg">
-            <div class="unisafe-shape-element"></div>
-            <div class="unisafe-shape-element"></div>
-            <div class="unisafe-shape-element"></div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="unisafe-content-container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-7">
-                            <div class="unisafe-brand-content">
-                                <h1 class="unisafe-main-heading">
-                                    {{ $entity->Title ?? 'Service Title' }}
-                                </h1>
-
-                                <p class="unisafe-brand-tagline">
-                                    {{ $entity->Short_Description ?? 'Service Description' }}
-                                </p>
-
-                                <div class="unisafe-action-buttons">
-                                    <a href="tel:+919610100127" class="unisafe-btn-primary">
-                                        <i class="fas fa-phone unisafe-icon-space"></i>
-                                        Contact Us
-                                    </a>
-                                    <a href="javascript:void(0)" class="unisafe-btn-secondary">
-                                        <i class="fas fa-briefcase unisafe-icon-space"></i>
-                                        View Portfolio
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5">
-                            <div class="unisafe-inquiry-form">
-                                <h4 class="enquiry-form-title">
-                                    Get a Free Quote!
-                                </h4>
-                                {!! html()->form('POST', route('web.enquiry.store'))
-                                    ->attribute('id', 'enquiryPopupForm')
-                                    ->class('row g-3 needs-validation')
-                                    ->open() !!}
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="enquiry-name" class="form-label">Full Name <span class="enquiry-required">*</span></label>
-                                            <input type="text" class="form-control-custom" id="enquiry-name" name="Name" placeholder="Your Full Name" required />
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="enquiry-email" class="form-label">Email Address <span class="enquiry-required">*</span></label>
-                                            <input type="email" class="form-control-custom" id="enquiry-email" name="Email" placeholder="Your Email Address" required />
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="enquiry-mobile" class="form-label">Mobile Number <span class="enquiry-required">*</span></label>
-                                            <input type="tel" class="form-control-custom" id="enquiry-mobile" name="Mobile" pattern="[0-9]{10}" placeholder="Your Phone Number" required />
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="enquiry-subject" class="form-label">Query For <span class="enquiry-required">*</span></label>
-                                            <input type="text" class="form-control-custom" id="enquiry-subject" name="subject" value="{{ $entity->Title ?? '' }}" readonly required />
-                                            <input type="hidden" name="id" value="{{ $entity->id ?? 0 }}">
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="enquiry-requirement" class="form-label">Requirement <span class="enquiry-required">*</span></label>
-                                        <textarea class="form-control-custom" id="enquiry-requirement" name="Message" rows="4" placeholder="Please describe your Message or Requirement..." required></textarea>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}"></div>
-                                    </div>
-
-                                    <div class="text-center">
-                                        {!! html()->button('Request Your Free Quote')
-                                            ->type('submit')
-                                            ->class('enquiry-submit-btn') !!}
-                                    </div>
-                                    <input type="hidden" name="type" value="service">
-                                {!! html()->form()->close() !!}
-                            </div>
-                        </div>
+    <!-- Hero Section with Background Image -->
+    <section class="service-detail-hero" style="background-image: url('{{ $service->file_name ? asset('storage/' . $service->file_name) : asset('images/default-service-bg.jpg') }}');">
+        <div class="container-fluid h-100">
+            <div class="row align-items-center h-100">
+                <!-- Content Left Side -->
+                <div class="col-lg-7 col-md-8">
+                    <div class="hero-content px-4">
+                        <h1 class="service-detail-title">{{ $service->title ?? '' }}</h1>
+                        <p class="service-detail-subtitle">
+                            Expertise that your little one needs to take a breath of relief
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Book Appointment Button - Right Side -->
+                <div class="col-lg-5 col-md-4">
+                    <div class="d-flex justify-content-center justify-content-md-end px-4">
+                        <a href="book-an-appointment" class="book-appointment-btn">
+                            <i class="fas fa-calendar-check me-2"></i>
+                            Book Appointment
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CIRCUIT CAMERAS
-            ================================================== -->
-    <section>
-        <div class="container">
+    <!-- Breadcrumb Section -->
+    <section class="breadcrumb-section">
+        <div class="container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="home"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/services">{{ $service->serviceCategory->Title ?? '' }}</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/services/pediatrics">Service</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ $service->title ?? '' }}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-4 order-2 order-lg-1">
-                    <div class="service-details-sidebar pe-lg-1-6 pe-xl-1-9">
-                        @if($services->isNotEmpty())
-                            <aside class="widget widget-nav-menu wow fadeIn mb-1-6" data-wow-delay="100ms">
-                                <div class="widget-title">
-                                    <h4 class="title h6 mb-0">Our Services</h4>
-                                </div>
-                                <div class="widget-body">
-                                    <ul class="list-style4">
-                                        @foreach($services as $service)
-                                            <li class="{{ $service->id == $entity->id ? 'active' : '' }}">
-                                                <a href="{{route('services.detail',$service->Slug)}}">{{ $service->Title ?? 'Service Title' }}</a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </aside>
-                        @endif
-                        <aside class="widget widget-address mb-0 wow fadeIn p-0" data-wow-delay="200ms">
-                            <div class="cover-background bg-img p-1-9 rounded word-break dark-overlay" data-overlay-dark="6" data-background="img/content/sidebar-image.jpg">
-                                <div class="d-table-cell vertical-align-middle z-index-2 position-relative">
-                                    <div class="d-flex mb-4">
-                                        <div class="flex-shrink-0">
-                                            <div class="contact-icons"><i class="ti-mobile"></i></div>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3 ms-lg-4">
-                                            <h4 class="h5 mb-1 text-white">Call Us</h4>
-                                            <p class="mb-0 text-white">(+91) {{ $settings['Sales_Mobile_Number'] ?? '9610100127' }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex mb-4">
-                                        <div class="flex-shrink-0">
-                                            <div class="contact-icons"><i class="ti-email"></i></div>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3 ms-lg-4">
-                                            <h4 class="h5 mb-1 text-white">Email</h4>
-                                            <p class="mb-0 text-white">{{ $settings['Sales_Email'] ?? 'info@unisafesecurities.com' }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <div class="contact-icons"><i class="fas fa-map-marker-alt"></i></div>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3 ms-lg-4">
-                                            <h4 class="h5 mb-1 text-white">Location</h4>
-                                            <p class="mb-0 text-white">{!! $settings['Address'] ?? '38, Nand Vihar Colony, Tonk Road, Sanganer, Jaipur (Raj.) India - 302033' !!}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </aside>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="mb-5">
+                        <h2 class="section-heading">{{ $service->title ?? '' }}</h2>
+                        {!! $service->description ?? '' !!}
                     </div>
                 </div>
 
-                <div class="col-lg-8 order-1 order-lg-2 mb-2-6 mb-lg-0">
-                    <div class="detail-services">
-                        <div class="mb-1-6 position-relative wow fadeIn" data-wow-delay="100ms">
-                            <img src="{{ asset('Uploads/Services/'.$entity->File_Name) }}" class="border-radius-5" alt="{{ $entity->Title ?? 'Service Image' }}"
-                                 onerror="this.onerror=null;this.src='{{ asset('/images/default-service.jpg') }}';" />
-                        </div>
-                        <div class="mb-1-6 wow fadeIn" data-wow-delay="200ms">
-                            {!! $entity->Description ?? 'No Description Found' !!}
-                        </div>
-                        
-                    </div>
-                </div>
-                <!-- end service right -->
             </div>
         </div>
     </section>
+
+    
+    @if($service->faqs && count($service->faqs))
+        <!-- FAQ Section -->
+        <section class="bg-gray faq-section">
+            <div class="container-fluid px-4">
+                <div class="faq-category" id="general">
+                    <h3 class="category-title">
+                        <i class="fas fa-info-circle me-2"></i>Faqs
+                    </h3>
+                    
+                        <div class="accordion" id="generalAccordion">
+                            @foreach($service->faqs as $i => $faq)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#general{{ $i }}">
+                                            {{ $faq['question'] ?? '' }}
+                                        </button>
+                                    </h2>
+                                    <div id="general{{ $i }}" class="accordion-collapse collapse" data-bs-parent="#generalAccordion">
+                                        <div class="accordion-body">
+                                            {!! $faq['answer'] ?? '' !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
+
+    @push('css')
+    <style>
+    .faq-section {
+        padding: 60px 0;
+    }
+    .faq-category {
+        margin-bottom: 50px;
+    }
+    .category-title {
+    color: var(--primary-brown);
+    font-weight: 600;
+    margin-bottom: 25px;
+    padding: 15px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 5px solid var(--primary-brown);
+}
+    .accordion-item {
+        border: none;
+        margin-bottom: 15px;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .accordion-button {
+        background: white;
+        border: none;
+        padding: 20px 25px;
+        font-weight: 600;
+        color: #333;
+        border-radius: 10px !important;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background: var(--primary-brown);
+        color: white;
+        box-shadow: none;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border: none;
+    }
+    
+    .accordion-button::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    
+    .accordion-button:not(.collapsed)::after {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    }
+    
+    .accordion-body {
+        padding: 25px;
+        background: #f8f9fa;
+        color: #6c757d;
+        line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+        .page-header {
+            padding: 60px 0;
+        }
+        
+        .faq-section {
+            padding: 40px 0;
+        }
+    }
+    .service-detail-hero {
+        position: relative;
+        height: 60vh;
+        min-height: 400px;
+        overflow: hidden;
+        border-radius: 0 0 30px 30px;
+    }
+    
+    .service-detail-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .service-detail-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        color: white;
+        padding: 40px;
+    }
+    
+    .service-detail-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .service-detail-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    .content-section {
+        padding: 60px 0;
+    }
+    
+    .section-heading {
+        color: var(--primary-brown);
+        font-weight: 700;
+    }
+    
+    .info-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        border-left: 5px solid #8b4513;
+    }
+    
+    .info-label {
+        font-weight: 600;
+        color: var(--primary-brown);
+        margin-bottom: 5px;
+    }
+    
+    .info-value {
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 30px;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 15px;
+        height: 15px;
+        background: var(--primary-brown);
+        border-radius: 50%;
+    }
+    
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        left: 7px;
+        top: 20px;
+        width: 2px;
+        height: calc(100% + 10px);
+        background: #dee2e6;
+    }
+    
+    .timeline-item:last-child::after {
+        display: none;
+    }
+    
+    .timeline-date {
+        font-weight: 600;
+        color: var(--primary-brown);
+        margin-bottom: 5px;
+    }
+    
+    .timeline-content {
+        color: #6c757d;
+    }
+    
+    .outcome-highlight {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        margin: 40px 0;
+    }
+    
+    .outcome-highlight h3 {
+        margin-bottom: 15px;
+    }
+    
+    .back-btn {
+        background: #6c757d;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    
+    .back-btn:hover {
+        background: #5a6268;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .doctor-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    
+    .doctor-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+    
+    .doctor-name {
+        font-weight: 700;
+        color: var(--primary-brown);
+        margin-bottom: 5px;
+    }
+    
+    .doctor-specialty {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+        .service-detail-title {
+            font-size: 2rem;
+        }
+        
+        .service-detail-hero {
+            height: 40vh;
+            min-height: 300px;
+        }
+        
+        .service-detail-overlay {
+            padding: 20px;
+        }
+    }
+
+
+    /* Hero image styles */
+        .service-detail-hero {
+            min-height: 40vh;
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://suryahospitals.com/testimonial/659633bf230c1Nirvaan_1662%20x%20763.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* Left side blur overlay */
+        .service-detail-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            padding: 220px 0;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .service-detail-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .service-detail-subtitle {
+            font-size: 1.25rem;
+            color: #495057;
+            margin-bottom: 0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .book-appointment-btn {
+            background: var(--primary-brown);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            z-index: 3;
+            position: relative;
+        }
+        
+        .book-appointment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+            color: white;
+        }
+        
+        .breadcrumb-section {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .breadcrumb-item {
+            font-size: 0.95rem;
+        }
+        
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "/";
+            color: #6c757d;
+            margin: 0 8px;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary-brown);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-item a:hover {
+            color: var(--primary-brown);
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-item.active {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .service-detail-hero::before {
+                width: 100%;
+                background: linear-gradient(to bottom, 
+                    rgba(255, 255, 255, 0.9) 0%, 
+                    rgba(255, 255, 255, 0.7) 50%, 
+                    rgba(255, 255, 255, 0.4) 100%);
+            }
+            
+            .service-detail-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content {
+                padding: 40px 0;
+            }
+        }
+</style>
+@endpush
 </x-web.layout>

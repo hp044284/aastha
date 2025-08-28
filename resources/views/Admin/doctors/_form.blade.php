@@ -47,19 +47,27 @@
             </div>
         @endif
     </div>
-
     <div class="col-md-6">
-        {!! Html::label('Specializations', 'specialization_id')->class('form-label') !!}
-        {!! 
-            Html::select('specialization_id[]', 
-                isset($specializations) ? $specializations->pluck('title', 'id')->toArray() : [], 
-                old('specialization_id', isset($doctor) ? (array)$doctor->specializations->pluck('id')->toArray() : [])
-            )
-            ->id('specialization_id')
-            ->class('form-select select2' . ($errors->has('specialization_id') ? ' is-invalid' : ''))
-            ->attribute('multiple', 'multiple')
-            ->attribute('placeholder', 'Select Specializations')
-        !!}
+        <label for="specialization_id" class="form-label">Specializations</label>
+        <select 
+            name="specialization_id[]" 
+            id="specialization_id" 
+            class="form-select{{ $errors->has('specialization_id') ? ' is-invalid' : '' }}" 
+            multiple
+        >
+            <option value="" disabled>Select Specializations</option>
+            @if(isset($specializations) && $specializations->count())
+                @php
+                    $selectedSpecializations = old('specialization_id', isset($doctor) ? $doctor->doctorSpecializations->pluck('specialization_id')->toArray() : []);
+                @endphp
+                @foreach($specializations as $specialization)
+                    <option value="{{ $specialization->id }}"
+                        {{ in_array($specialization->id, $selectedSpecializations) ? 'selected' : '' }}>
+                        {{ $specialization->title }}
+                    </option>
+                @endforeach
+            @endif
+        </select>
         @if ($errors->has('specialization_id'))
             <div class="invalid-feedback">
                 {{ $errors->first('specialization_id') }}
@@ -105,7 +113,50 @@
         <label class="form-label fw-bold fs-5 mt-4 mb-2 d-block">
             <i class="bx bx-book"></i> Educations
         </label>
-        <div id="education-wrapper"></div>
+        <div id="education-wrapper">
+            @if(isset($doctor) && $doctor->education->count())
+                @foreach($doctor->education as $index => $edu)
+                    <div class="repeat-group border rounded-4 mb-4 bg-white shadow-sm px-3 py-4">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <input type="text" name="education[{{ $index }}][degree]" id="education_{{ $index }}_degree"
+                                    value="{{ old('education.'.$index.'.degree', $edu->degree) }}"
+                                    placeholder="Degree" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="education[{{ $index }}][institution]" id="education_{{ $index }}_institution"
+                                    value="{{ old('education.'.$index.'.institution', $edu->institution) }}"
+                                    placeholder="Institution" class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <select name="education[{{ $index }}][start_year]" id="education_{{ $index }}_start_year" class="form-select">
+                                    <option value="">Select Year</option>
+                                    @foreach(getYearRangeDesc() as $year)
+                                        <option value="{{ $year }}" {{ old('education.'.$index.'.start_year', $edu->start_year) == $year ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <select name="education[{{ $index }}][end_year]" id="education_{{ $index }}_end_year" class="form-select">
+                                    <option value="">Select Year</option>
+                                    @foreach(getYearRangeDesc() as $year)
+                                        <option value="{{ $year }}" {{ old('education.'.$index.'.end_year', $edu->end_year) == $year ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="button" class="btn btn-outline-danger btn-remove-row">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
         <button type="button" id="add-education-btn" class="btn btn-primary">Add Education</button>
     </div>
 
@@ -115,7 +166,50 @@
             <i class="bx bx-briefcase"></i> Positions
         </label>
         <!-- Wrapper for positions -->
-        <div id="position-wrapper"></div>
+        <div id="position-wrapper">
+    @if(isset($doctor) && $doctor->positions->count())
+        @foreach($doctor->positions as $index => $pos)
+            <div class="repeat-group border rounded-4 mb-4 bg-white shadow-sm px-3 py-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <input type="text" name="positions[{{ $index }}][position_title]" id="positions_{{ $index }}_position_title"
+                            value="{{ old('positions.'.$index.'.position_title', $pos->position_title) }}"
+                            placeholder="Position Title" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" name="positions[{{ $index }}][organization]" id="positions_{{ $index }}_organization"
+                            value="{{ old('positions.'.$index.'.organization', $pos->organization) }}"
+                            placeholder="Organization" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <select name="positions[{{ $index }}][start_year]" id="positions_{{ $index }}_start_year" class="form-select">
+                            <option value="">Select Year</option>
+                            @foreach(getYearRangeDesc() as $year)
+                                <option value="{{ $year }}" {{ old('positions.'.$index.'.start_year', $pos->start_year) == $year ? 'selected' : '' }}>
+                                    {{ $year }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select name="positions[{{ $index }}][end_year]" id="positions_{{ $index }}_end_year" class="form-select">
+                            <option value="">Select Year</option>
+                            @foreach(getYearRangeDesc() as $year)
+                                <option value="{{ $year }}" {{ old('positions.'.$index.'.end_year', $pos->end_year) == $year ? 'selected' : '' }}>
+                                    {{ $year }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-outline-danger btn-remove-row">Remove</button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+</div>
+
         <!-- Add button -->
         <button type="button" id="add-position-btn" class="btn btn-primary mt-3">
         Add Position
@@ -126,7 +220,35 @@
         <label class="form-label fw-bold fs-5 mt-4 mb-2 d-block">
             <i class="bx bx-link"></i> Affiliations
         </label>
-        <div id="affiliations-wrapper"></div>
+        <div id="affiliations-wrapper">
+    @if(isset($doctor) && $doctor->affiliations->count())
+        @foreach($doctor->affiliations as $index => $aff)
+            <div class="repeat-group border rounded-4 mb-4 bg-white shadow-sm px-3 py-4">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <input type="text" name="affiliations[{{ $index }}][organization]" id="affiliations_{{ $index }}_organization"
+                            value="{{ old('affiliations.'.$index.'.organization', $aff->organization) }}"
+                            placeholder="Organization" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="affiliations[{{ $index }}][affiliation_type]" id="affiliations_{{ $index }}_affiliation_type"
+                            value="{{ old('affiliations.'.$index.'.affiliation_type', $aff->affiliation_type) }}"
+                            placeholder="Affiliation Type" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="affiliations[{{ $index }}][role_title]" id="affiliations_{{ $index }}_role_title"
+                            value="{{ old('affiliations.'.$index.'.role_title', $aff->role_title) }}"
+                            placeholder="Role Title" class="form-control">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-outline-danger btn-remove-row">Remove</button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+</div>
+
         <button type="button" id="add-affiliation-btn" class="btn btn-primary mt-3">Add Affiliation</button>
     </div>
 
@@ -150,7 +272,9 @@
 {!! Html::form()->close() !!}
 @push('js')
     <script type="text/javascript">
-        function initRepeater({wrapperSelector, addBtnSelector, rowTemplateSelector}) {
+
+        function initRepeater({wrapperSelector, addBtnSelector, rowTemplateSelector}) 
+        {
             const wrapper = document.querySelector(wrapperSelector);
             const addBtn = document.querySelector(addBtnSelector);
             const rowTemplate = document.querySelector(rowTemplateSelector).innerHTML;
@@ -174,6 +298,17 @@
                 });
             }
 
+            // Helper to initialize flatpickr on all .datepicker in wrapper
+            function initDatepickers(context) 
+            {
+                (context || wrapper).querySelectorAll('.datepicker').forEach(function(input) 
+                {
+                    // If already has flatpickr instance, skip
+                    if (input._flatpickr) return;
+                    flatpickr(input, {});
+                });
+            }
+
             function addRow() {
                 const index = wrapper.querySelectorAll('.repeat-group').length;
                 const newRowHtml = rowTemplate
@@ -181,14 +316,19 @@
                     .replace(/_0_/g, `_${index}_`);
                 const div = document.createElement('div');
                 div.innerHTML = newRowHtml;
-                wrapper.appendChild(div.firstElementChild);
+                const newRow = div.firstElementChild;
+                wrapper.appendChild(newRow);
                 updateRemoveButtons();
-                $(".datepicker").flatpickr();
+                // Only initialize datepicker for new row, do not touch previous
+                initDatepickers(newRow);
             }
 
             // If new form and no rows exist → add one default
             if (wrapper.querySelectorAll('.repeat-group').length === 0) {
                 addRow();
+            } else {
+                // On page load, initialize datepickers for all existing rows
+                initDatepickers(wrapper);
             }
 
             addBtn.addEventListener('click', () => {
@@ -243,7 +383,22 @@
                 allowClear: true
             });
 
-            $(".datepicker").flatpickr();
+            $(".datepicker").flatpickr({
+                dateFormat: "Y",
+                allowInput: true,
+                maxDate: new Date().getFullYear().toString(),
+                minDate: "1900",
+                defaultDate: null,
+                plugins: [
+                    new flatpickr.plugins.yearSelect({})
+                ],
+                onReady: function(selectedDates, dateStr, instance) {
+                    // Only show year picker, hide calendar
+                    if (instance.calendarContainer) {
+                        instance.calendarContainer.classList.add('flatpickr-year-only');
+                    }
+                }
+            });
         });
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -261,10 +416,20 @@
                     <input type="text" name="education[0][institution]" id="education_0_institution" placeholder="Institution" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <input type="number" name="education[0][start_year]" id="education_0_start_year" placeholder="Start Year" class="form-control datepicker">
+                    <select name="education[0][start_year]" id="education_0_start_year" class="form-select">
+                        <option value="">Select Year Range</option>
+                        @foreach(getYearRangeDesc() as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <input type="number" name="education[0][end_year]" id="education_0_end_year" placeholder="End Year" class="form-control datepicker">
+                <select name="education[0][end_year]" id="education_0_end_year" class="form-select">
+                        <option value="">Select Year Range</option>
+                        @foreach(getYearRangeDesc() as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-12 text-end">
                     <button type="button" class="btn btn-outline-danger btn-remove-row">Remove</button>
@@ -284,10 +449,20 @@
                     <input type="text" name="positions[0][organization]" id="positions_0_organization" placeholder="Organization" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <input type="number" name="positions[0][start_year]" id="positions_0_start_year" placeholder="Start Year" class="form-control datepicker">
+                    <select name="positions[0][start_year]" id="positions_0_start_year" class="form-select">
+                        <option value="">Select Year Range</option>
+                        @foreach(getYearRangeDesc() as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-6">
-                    <input type="number" name="positions[0][end_year]" id="positions_0_end_year" placeholder="End Year" class="form-control datepicker">
+                <select name="positions[0][end_year]" id="positions_0_end_year" class="form-select">
+                        <option value="">Select Year Range</option>
+                        @foreach(getYearRangeDesc() as $key => $value)
+                            <option value="{{ $value }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-12 text-end">
                     <button type="button" class="btn btn-outline-danger btn-remove-row">Remove</button>

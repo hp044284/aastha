@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\Auth;
 class ReviewsController extends Controller
 {
     use FileUploadTrait;
-    public function Index(Request $request)
+    public function index(Request $request)
     {
 
-        return view('Admin.Reviews.Index');
+        return view('Admin.reviews.index');
     }
 
-    public function Create(Request $request)
+    public function create(Request $request)
     {
-        return view('Admin.Reviews.Create');
+        return view('Admin.reviews.create');
     }
 
-    public function Edit(Request $request, $Random_Id)
+    public function edit(Request $request, $Random_Id)
     {
         try
         {
             $entity = Review::where('Random_Id',$Random_Id)->firstOrFail();
-            return view('Admin.Reviews.Edit',compact('entity'));
+            return view('Admin.reviews.edit',compact('entity'));
         }
         catch (\PDOException $e)
         {
@@ -41,7 +41,7 @@ class ReviewsController extends Controller
         }
     }
 
-    public function Axios_Record(Request $request)
+    public function axiosRecord(Request $request)
     {
         ## Read value
         $draw = $request->get('draw');
@@ -94,24 +94,37 @@ class ReviewsController extends Controller
             $data_arr[$incKey]['Review_Type'] = !empty($record->Review_Type) ? $record->Review_Type : '';
             $data_arr[$incKey]['Review_Status'] = !empty($record->Review_Status) ? $record->Review_Status : '';
 
-            $actions = '<div class="col">';
-                $actions .= '<div class="btn-group" role="group" aria-label="Basic example">';
+            $actions = '<div class="btn-group" role="group" aria-label="Actions">';
+            // Show button
+            // $actions .= '<button type="button" onclick="showReviewOffcanvas(' . $id . ')" class="btn btn-info btn-sm me-1" title="Show">';
+            // $actions .= '<i class="bx bx-show"></i>';
+            // $actions .= '</button>';
 
-                    if($Is_Edit)
-                    {
-                        if(isset($record->Review_Status) && $record->Review_Status == "Pending")
-                        {
-                            $actions .= '<a href="javascript:void(0);" onclick="Approve_Or_Reject('.$id.', \'Approved\',\''.addslashes($record->Review_Type).'\')" class="btn btn-outline-success"><i class="bx bx-check"></i>Approved</a>';
-                            $actions .= '<a href="javascript:void(0);" onclick="Approve_Or_Reject('.$id.',\'Rejected\',\''.addslashes($record->Review_Type).'\')" class="btn btn-outline-danger"><i class="bx bx-x"></i>Rejected</a>';
-                        }
-                        $actions .= '<a href="javascript:void(0);" onclick="Reply_Review('.$id.')" class="btn btn-outline-primary"><i class="bx bx-reply"></i>Reply</a>';
-                    }
+            if ($Is_Edit) {
+                // Approve/Reject buttons if status is Pending
+                if (isset($record->Review_Status) && $record->Review_Status == "Pending") {
+                    $actions .= '<button type="button" onclick="Approve_Or_Reject(' . $id . ', \'Approved\', \'' . addslashes($record->Review_Type) . '\')" class="btn btn-success btn-sm me-1" title="Approve">';
+                    $actions .= '<i class="bx bx-check"></i>';
+                    $actions .= '</button>';
+                    $actions .= '<button type="button" onclick="Approve_Or_Reject(' . $id . ', \'Rejected\', \'' . addslashes($record->Review_Type) . '\')" class="btn btn-danger btn-sm me-1" title="Reject">';
+                    $actions .= '<i class="bx bx-x"></i>';
+                    $actions .= '</button>';
+                }
+                // Reply button
+                $actions .= '<button type="button" onclick="Reply_Review(' . $id . ')" class="btn btn-primary btn-sm me-1" title="Reply">';
+                $actions .= '<i class="bx bx-reply"></i>';
+                $actions .= '</button>';
+            }
 
-                    if($Is_Delete)
-                    {
-                        $actions .= '<a href="javascript:void(0);" onclick="Delete_Entity('.$id.')" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Delete</a>';
-                    }
-                $actions .= '</div>';
+            if ($Is_Delete) {
+                $actions .= '<form action="' . route('review.delete') . '" method="POST" style="display:inline-block;" onsubmit="return confirm(\'Are you sure you want to delete this review?\');">';
+                $actions .= csrf_field();
+                $actions .= '<input type="hidden" name="id" value="' . $id . '">';
+                $actions .= '<button type="submit" class="btn btn-danger btn-sm" title="Delete">';
+                $actions .= '<i class="bx bx-trash"></i>';
+                $actions .= '</button>';
+                $actions .= '</form>';
+            }
             $actions .= '</div>';
 
             $data_arr[$incKey]['action'] = $actions;
@@ -128,7 +141,7 @@ class ReviewsController extends Controller
         exit;
     }
 
-    public function Store(Request $request)
+    public function store(Request $request)
     {
         try
         {
@@ -178,7 +191,7 @@ class ReviewsController extends Controller
         }
     }
 
-    public function Update(Request $request)
+    public function update(Request $request)
     {
         try
         {
@@ -231,7 +244,7 @@ class ReviewsController extends Controller
         }
     }
 
-    public function Status(Request $request)
+    public function status(Request $request)
     {
         try
         {
@@ -271,7 +284,7 @@ class ReviewsController extends Controller
         }
     }
 
-    public function Destroy(Request $request)
+    public function destroy(Request $request)
     {
         try
         {
@@ -305,31 +318,19 @@ class ReviewsController extends Controller
                     "Review_Count" => $Review_Count
                 ]);
             }
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Deleted successfully!',
-            ], 200);
+            return redirect()->back()->with('success', 'Deleted successfully!');
         }
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
         catch (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException  $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
         catch (Exception $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
     }
 

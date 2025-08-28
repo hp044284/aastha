@@ -9,8 +9,8 @@ class DoctorPosition extends Model
     protected $fillable = [
         'doctor_id',
         'position_title',
-        'start_date',
-        'end_date',
+        'start_year',
+        'end_year',
         'organization',
     ];
 

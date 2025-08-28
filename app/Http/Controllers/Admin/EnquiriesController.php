@@ -7,13 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class EnquiriesController extends Controller
 {
-    public function Index(Request $request)
+    public function index(Request $request)
     {
 
-        return view('Admin.Enquiries.Index');
+        return view('Admin.enquiries.index');
     }
 
-    public function Axios_Record(Request $request)
+    public function axiosRecord(Request $request)
     {
         ## Read value
         $draw = $request->get('draw');
@@ -62,15 +62,24 @@ class EnquiriesController extends Controller
             $data_arr[$incKey]['subject'] = !empty($record->subject) ? $record->subject : '';
             $data_arr[$incKey]['enquirable_type'] = !empty($record->enquirable_type) ? $record->enquirable_type : '';
             $data_arr[$incKey]['Message'] = !empty($record->Message) ? $record->Message : '';
+            $data_arr[$incKey]['created_at'] = !empty($record->created_at) ? $record->created_at->format('d/m/Y H:i') : '';
             $data_arr[$incKey]['Status'] = !empty($record->Status) ? '<button type="button" data-status="active" class="btn btn-success status-button" data-id="'.$id.'">Active</button>' : '<button type="button" class="btn btn-danger status-button" data-id="'.$id.'" data-status="inactive">Inactive</button>';
 
-            $actions = '<div class="col">';
-                $actions .= '<div class="btn-group" role="group" aria-label="Basic example">';
-                    if($Is_Delete)
-                    {
-                        $actions .= '<a href="javascript:void(0);" onclick="Delete_Entity('.$id.')" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Delete</a>';
-                    }
-                $actions .= '</div>';
+            $actions = '<div class="btn-group" role="group" aria-label="Actions">';
+            // Show button
+            // $actions .= '<button type="button" onclick="showEnquiryOffcanvas(' . $id . ')" class="btn btn-info btn-sm me-1" title="Show">';
+            // $actions .= '<i class="bx bx-show"></i>';
+            // $actions .= '</button>';
+            // Delete button (form)
+            if ($Is_Delete) {
+                $actions .= '<form action="' . route('enquiry.delete') . '" method="POST" style="display:inline-block;" onsubmit="return confirm(\'Are you sure you want to delete this enquiry?\');">';
+                $actions .= csrf_field();
+                $actions .= '<input type="hidden" name="id" value="' . $id . '">';
+                $actions .= '<button type="submit" class="btn btn-danger btn-sm" title="Delete">';
+                $actions .= '<i class="bx bx-trash"></i>';
+                $actions .= '</button>';
+                $actions .= '</form>';
+            }
             $actions .= '</div>';
 
             $data_arr[$incKey]['action'] = $actions;
@@ -92,7 +101,7 @@ class EnquiriesController extends Controller
         exit;
     }
 
-    public function Status(Request $request)
+    public function status(Request $request)
     {
         try
         {
@@ -132,7 +141,7 @@ class EnquiriesController extends Controller
         }
     }
 
-    public function Destroy(Request $request)
+    public function destroy(Request $request)
     {
         try
         {
@@ -144,31 +153,19 @@ class EnquiriesController extends Controller
             $entity = Enquiry::findOrFail($id);
             $validated_data['Is_Deleted'] = 1;
             $entity->update($validated_data);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Deleted successfully!',
-            ], 200);
+            return redirect()->back()->with('success', 'The enquiry has been deleted successfully.');
         }
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
         catch (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException  $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
         catch (Exception $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while deleting the enquiry. Please try again later.');
         }
     }
 }

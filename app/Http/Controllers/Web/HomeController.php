@@ -1,13 +1,12 @@
 <?php
 namespace App\Http\Controllers\Web;
-use App\Models\Faq;
 use App\Models\Blog;
+use App\Models\Page;
 use App\Models\Slider;
-use App\Models\Client;
+use App\Models\Doctor;
 use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use App\Models\FeaturedService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 
@@ -15,14 +14,13 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $faqs = Faq::where('Status',1)->orderBy('id','DESC')->get();
         $blogs = Blog::where('Status',1)->orderBy('id','DESC')->get();
-        $clients = Client::where('Status',1)->orderBy('id','DESC')->get();
         $sliders = Slider::where('Status',1)->orderBy('id','DESC')->get();
+        $doctors = Doctor::with('position')->where('status',1)->orderBy('id','DESC')->get();
         $services = Service::where('Status',1)->orderBy('id','DESC')->get();
         $testimonials = Testimonial::where('Status',1)->orderBy('id','DESC')->get();
-        $feature_services = FeaturedService::where('Status',1)->orderBy('id','DESC')->get();
-        return view('web.home.index',compact('blogs','clients','sliders','services','testimonials','faqs','feature_services'));
+        // echo '<pre>';print_r($doctors);exit;
+        return view('web.home.index',compact('blogs','sliders','services','testimonials','doctors'));
     }
 
     public function Axios_Review(Request $request)

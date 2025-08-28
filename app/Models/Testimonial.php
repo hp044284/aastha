@@ -2,8 +2,11 @@
 namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Testimonial extends Model
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      *
@@ -16,28 +19,4 @@ class Testimonial extends Model
      * @var array
      */
     protected $guarded  = [];
-
-    protected static function booted()
-    {
-        static::creating(function ($role)
-        {
-            $role->Random_Id = self::Generate_Unique_Random_Id();
-        });
-    }
-
-    private static function Generate_Unique_Random_Id()
-    {
-        $randomId = strtoupper('TM'.date('ym').Str::random(4));
-        while (self::where('Random_Id', $randomId)->exists())
-        {
-            $randomId = strtoupper('TM'.date('ym').Str::random(4));
-        }
-        return $randomId;
-    }
-
-    public function newQuery($excludeDeleted = true)
-    {
-        return parent::newQuery($excludeDeleted)
-            ->where('testimonials.Is_Deleted', '=', 0);
-    }
 }

@@ -27,7 +27,9 @@
                 </nav>
             </div>
             @if($Is_Add)
-                <a href="{{ route('slider.create') }}" class="btn btn-primary float-end">Add</a>
+                <div class="ms-auto">
+                    <a href="{{ route('slider.create') }}" class="btn btn-primary">Add</a>
+                </div>
             @endif
         </div>
         <!--end breadcrumb-->

@@ -4,9 +4,12 @@ use Illuminate\Support\Str;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Service extends Model
 {
-    use HasSlug;
+    use HasSlug,SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -20,38 +23,14 @@ class Service extends Model
      */
     protected $guarded  = [];
 
-    protected static function booted()
+    public function serviceCategory()
     {
-        static::creating(function ($entity)
-        {
-            $entity->Random_Id = self::Generate_Unique_Random_Id();
-        });
-    }
-
-    public function ServiceCategory()
-    {
-        return $this->belongsTo(ServiceCategory::class,'Category_Id');
-    }
-
-    private static function Generate_Unique_Random_Id()
-    {
-        $randomId = strtoupper('SR'.date('ym').Str::random(4));
-        while (self::where('Random_Id', $randomId)->exists())
-        {
-            $randomId = strtoupper('SR'.date('ym').Str::random(4));
-        }
-        return $randomId;
-    }
-
-    public function newQuery($excludeDeleted = true)
-    {
-        return parent::newQuery($excludeDeleted)
-            ->where('services.Is_Deleted', '=', 0);
+        return $this->belongsTo(ServiceCategory::class, 'category_id');
     }
 
     public function getSlugOptions() : SlugOptions
     {
-        return SlugOptions::create()->generateSlugsFrom('Title')->saveSlugsTo('Slug');
+        return SlugOptions::create()->generateSlugsFrom('title')->saveSlugsTo('slug');
     }
 
     public function enquiries()
@@ -62,5 +41,10 @@ class Service extends Model
     public function seo()
     {
         return $this->morphOne(SeoPage::class, 'seoable');
+    }
+
+    public function faqs()
+    {
+        return $this->hasMany(ServiceFaq::class, 'service_id');
     }
 }

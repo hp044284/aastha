@@ -28,6 +28,22 @@
                     ->open() !!}
 
                     <div class="col-md-6">
+                        {!! html()->label('Category')->for('category')->class('form-label') !!}
+                        {!! html()->select('category_id', [
+                                'appointments' => 'Appointments',
+                                'patient_care' => 'Patient Care',
+                                'medical_services' => 'Medical Services',
+                                'insurance_billing' => 'Insurance & Billing',
+                                'emergency_services' => 'Emergency Services',
+                                'general_information' => 'General Information',
+                            ])
+                            ->id('category')
+                            ->class('form-select')
+                            ->required()
+                        !!}
+                    </div>
+
+                    <div class="col-md-6">
                         {!! html()->label('Question')->for('question')->class('form-label') !!}
                         {!! html()->text('question')
                             ->id('question')
@@ -36,7 +52,8 @@
                             ->required() !!}
                     </div>
 
-                    <div class="col-md-6">
+
+                    <div class="col-md-12">
                         {!! html()->label('Answer')->for('answer')->class('form-label') !!}
                         {!! html()->textarea('answer')
                             ->id('answer')

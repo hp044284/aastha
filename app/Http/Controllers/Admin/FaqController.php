@@ -64,6 +64,16 @@ class FaqController extends Controller
             $Random_Id = $record->id;
             $data_arr[$incKey]['id'] = $record->id;
             $data_arr[$incKey]['question'] = !empty($record->question) ? $record->question : '';
+            // Display category name instead of category_id
+            $categories = [
+                'appointments' => 'Appointments',
+                'patient_care' => 'Patient Care',
+                'medical_services' => 'Medical Services',
+                'insurance_billing' => 'Insurance & Billing',
+                'emergency_services' => 'Emergency Services',
+                'general_information' => 'General Information',
+            ];
+            $data_arr[$incKey]['category_id'] = !empty($record->category_id) && isset($categories[$record->category_id]) ? $categories[$record->category_id] : '';
             $data_arr[$incKey]['status'] = !empty($record->status) ? '<button type="button" data-status="active" class="btn btn-success status-button" data-id="'.$id.'">Active</button>' : '<button type="button" class="btn btn-danger status-button" data-id="'.$id.'" data-status="inactive">Inactive</button>';
 
             $actions = '<div class="col">';
@@ -112,6 +122,7 @@ class FaqController extends Controller
             $validator = Validator::make($request->all(), [
                 'question' => 'required',
                 'answer' => 'required',
+                'category_id' => 'required',
                 'status' => 'required',
             ]);
 
@@ -170,6 +181,7 @@ class FaqController extends Controller
             $validator = Validator::make($request->all(), [
                 'question' => 'required',
                 'answer' => 'required',
+                'category_id' => 'required',
                 'status' => 'required',
             ]);
 

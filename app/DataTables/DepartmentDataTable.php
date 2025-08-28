@@ -55,6 +55,7 @@ class DepartmentDataTable extends DataTable
                     ->setTableId('department-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([

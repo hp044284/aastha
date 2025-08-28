@@ -1,5 +1,6 @@
 <?php
 namespace App\DataTables;
+use Carbon\Carbon;
 use App\Models\Doctor;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -19,10 +20,14 @@ class DoctorDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $query = $query->with('position');
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->editColumn('created_at', function($row) {
                 return Carbon::parse($row->created_at)->format('d/m/Y h:i A');
+            })
+            ->editColumn('position_id', function($row) {
+                return $row->position->title ?? '';
             })
             ->editColumn('status', function($row) 
             {
@@ -62,6 +67,7 @@ class DoctorDataTable extends DataTable
                     ->setTableId('doctor-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([

@@ -24,7 +24,9 @@
                 </nav>
             </div>
             @if($Is_Add)
-                <a href="{{ route('faqs.create') }}" class="btn btn-primary float-end">Add</a>
+                <div class="ms-auto">
+                    <a href="{{ route('faqs.create') }}" class="btn btn-primary">Add</a>
+                </div>
             @endif
         </div>
         <!--end breadcrumb-->
@@ -38,6 +40,7 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
+                                            <th>Category</th>
                                             <th>Question</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -80,6 +83,7 @@
             serverMethod: 'post',
             columns: [
                 { data: 'id', name: 'id' },
+                { data: 'category_id', name: 'category_id' },
                 { data: 'question', name: 'question' },
                 { data: 'status', name: 'status' },
                 { data: 'action', name: 'action', orderable: false, searchable: false }

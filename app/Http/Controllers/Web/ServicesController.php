@@ -28,35 +28,20 @@ class ServicesController extends Controller
         return view('web.services.index', compact('entities', 'service_category'));
     }
 
-    public function Details(Request $request, $slug)
+    public function details(Request $request, $slug)
     {
         try
         {
-            $service_category = ServiceCategory::where('Slug', $slug)->first();
-            if($service_category)
-            {
-                $query = Service::query();
-                $query->where('Status', 1);
-
-                $service_category_id = $service_category->id;
-                $query->where('Sub_Category_Id', $service_category_id);
-                $entities = $query->latest()->orderBy('id', 'DESC')->paginate(8);
-                return view('web.services.index', compact('entities', 'service_category'));
-            }
-
-            $entity = Service::where('Status',1)->where('Slug',$slug)->first();
-            $services = Service::where('Status',1)->where('Category_Id',$entity->Category_Id)->get();
-            $settings = Setting::pluck('Value','Name')->toArray();
-
-            return view('web.services.detail',compact('entity','services','settings'));
+            $service = Service::with('serviceCategory','faqs')->where('status', 1)->where('slug', $slug)->first();
+            return view('web.services.detail',compact('service'));
         }
         catch (PDOException $e)
         {
-            return to_route('services.index')->with('error', $e->getMessage());
+            return to_route('web.services.index')->with('error', $e->getMessage());
         }
         catch (Exception $e)
         {
-            return to_route('services.index')->with('error', $e->getMessage());
+            return to_route('web.services.index')->with('error', $e->getMessage());
         }
         catch (ModelNotFoundException $e)
         {

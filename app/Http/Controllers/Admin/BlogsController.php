@@ -11,25 +11,25 @@ use App\Http\Controllers\Controller;
 class BlogsController extends Controller
 {
     use FileUploadTrait;
-    public function Index(Request $request)
+    public function index(Request $request)
     {
 
-        return view('Admin.Blogs.Index');
+        return view('Admin.blogs.index');
     }
 
-    public function Create(Request $request)
+    public function create(Request $request)
     {
         $Blog_Categories = BlogCategory::where('Parent_Id',0)->where('Status',1)->pluck('Title','id');
-        return view('Admin.Blogs.Create',compact('Blog_Categories'));
+        return view('Admin.blogs.create',compact('Blog_Categories'));
     }
 
-    public function Edit(Request $request, $Random_Id)
+    public function edit(Request $request, $Random_Id)
     {
         try
         {
             $entity = Blog::where('Random_Id',$Random_Id)->firstOrFail();
             $Blog_Categories = BlogCategory::where('Parent_Id',0)->where('Status',1)->pluck('Title','id');
-            return view('Admin.Blogs.Edit',compact('entity','Blog_Categories'));
+            return view('Admin.blogs.edit',compact('entity','Blog_Categories'));
         }
         catch (\PDOException $e)
         {
@@ -45,7 +45,7 @@ class BlogsController extends Controller
         }
     }
 
-    public function Axios_Record(Request $request)
+    public function axiosRecord(Request $request)
     {
         ## Read value
         $draw = $request->get('draw');
@@ -92,18 +92,29 @@ class BlogsController extends Controller
             $data_arr[$incKey]['Title'] = !empty($record->Title) ? $record->Title : '';
             $data_arr[$incKey]['Status'] = !empty($record->Status) ? '<button type="button" data-status="active" class="btn btn-success status-button" data-id="'.$id.'">Active</button>' : '<button type="button" class="btn btn-danger status-button" data-id="'.$id.'" data-status="inactive">Inactive</button>';
 
-            $actions = '<div class="col">';
-                $actions .= '<div class="btn-group" role="group" aria-label="Basic example">';
-                    if ($Is_Edit)
-                    {
-                        $actions .= '<a href="'.route('blog.edit',$Random_Id).'" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Edit</a>';
-                    }
+            $actions = '<div class="btn-group" role="group" aria-label="Actions">';
+            // Show button
+            // $actions .= '<button type="button" onclick="showBlogOffcanvas(' . $id . ')" class="btn btn-info btn-sm me-1" title="Show">';
+            // $actions .= '<i class="bx bx-show"></i>';
+            // $actions .= '</button>';
 
-                    if ($Is_Delete)
-                    {
-                        $actions .= '<a href="javascript:void(0);" onclick="Delete_Entity('.$id.')" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Delete</a>';
-                    }
-                $actions .= '</div>';
+            // Edit button
+            if ($Is_Edit) {
+                $actions .= '<a href="' . route('blog.edit', $Random_Id) . '" class="btn btn-primary btn-sm me-1" title="Edit">';
+                $actions .= '<i class="bx bx-edit"></i>';
+                $actions .= '</a>';
+            }
+
+            // Delete button (form)
+            if ($Is_Delete) {
+                $actions .= '<form action="' . route('blog.delete', $id) . '" method="POST" style="display:inline-block;" onsubmit="return confirm(\'Are you sure you want to delete this blog?\');">';
+                $actions .= csrf_field();
+                $actions .= '<button type="submit" class="btn btn-danger btn-sm" title="Delete">';
+                $actions .= '<i class="bx bx-trash"></i>';
+                $actions .= '</button>';
+                $actions .= '</form>';
+            }
+
             $actions .= '</div>';
 
             $data_arr[$incKey]['action'] = $actions;
@@ -120,7 +131,7 @@ class BlogsController extends Controller
         exit;
     }
 
-    public function Store(Request $request)
+    public function store(Request $request)
     {
         try
         {
@@ -187,7 +198,7 @@ class BlogsController extends Controller
         }
     }
 
-    public function Update(Request $request)
+    public function update(Request $request)
     {
         try
         {
@@ -256,7 +267,7 @@ class BlogsController extends Controller
         }
     }
 
-    public function Status(Request $request)
+    public function status(Request $request)
     {
         try
         {
@@ -296,7 +307,7 @@ class BlogsController extends Controller
         }
     }
 
-    public function Destroy(Request $request)
+    public function destroy(Request $request)
     {
         try
         {
@@ -309,35 +320,23 @@ class BlogsController extends Controller
             $this->deleteFile('/Uploads/Blogs/', $entity->File_Name ?? '');
             $validated_data['Is_Deleted'] = 1;
             $entity->update($validated_data);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Deleted successfully!',
-            ], 200);
+            return redirect()->back()->with('success', 'Deleted successfully!');
         }
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while updating the profile : ' . $e->getMessage());
         }
         catch (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException  $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while updating the profile : ' . $e->getMessage());
         }
         catch (Exception $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return redirect()->back()->with('error', 'An error occurred while updating the profile : ' . $e->getMessage());
         }
     }
 
-    public function Axios_Product_Sub_Category(Request $request)
+    public function axiosProductSubCategory(Request $request)
     {
         try
         {

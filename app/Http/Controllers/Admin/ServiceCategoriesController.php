@@ -8,23 +8,23 @@ use App\Http\Controllers\Controller;
 class ServiceCategoriesController extends Controller
 {
     use FileUploadTrait;
-    public function Index(Request $request)
+    public function index(Request $request)
     {
 
-        return view('Admin.Service_Categories.Index');
+        return view('Admin.service-categories.index');
     }
 
-    public function Create(Request $request)
+    public function create(Request $request)
     {
-        return view('Admin.Service_Categories.Create');
+        return view('Admin.service-categories.create');
     }
 
-    public function Edit(Request $request, $Random_Id)
+    public function edit(Request $request, $Random_Id)
     {
         try
         {
             $entity = ServiceCategory::where('Random_Id',$Random_Id)->firstOrFail();
-            return view('Admin.Service_Categories.Edit',compact('entity'));
+            return view('Admin.service-categories.edit',compact('entity'));
         }
         catch (\PDOException $e)
         {
@@ -90,23 +90,32 @@ class ServiceCategoriesController extends Controller
             $data_arr[$incKey]['Title'] = !empty($record->Title) ? $record->Title : '';
             $data_arr[$incKey]['Status'] = !empty($record->Status) ? '<button type="button" data-status="active" class="btn btn-success status-button" data-id="'.$id.'">Active</button>' : '<button type="button" class="btn btn-danger status-button" data-id="'.$id.'" data-status="inactive">Inactive</button>';
 
-            $actions = '<div class="col">';
-                $actions .= '<div class="btn-group" role="group" aria-label="Basic example">';
-                    if($Is_Edit)
-                    {
-                        $actions .= '<a href="'.route('service_category.edit',$Random_Id).'" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Edit</a>';
-                    }
+            $actions = '<div class="btn-group" role="group" aria-label="Actions">';
+            // Edit button
+            if ($Is_Edit) {
+                $actions .= '<a href="' . route('service_category.edit', $Random_Id) . '" class="btn btn-primary btn-sm me-1" title="Edit">';
+                $actions .= '<i class="bx bx-edit"></i>';
+                $actions .= '</a>';
+            }
 
-                    if($Is_Read)
-                    {
-                        $actions .= '<a href="'.route('service_sub_category.index',$Random_Id).'" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Service Sub Category</a>';
-                    }
+            // Service Sub Category button (optional, keep as secondary action)
+            if ($Is_Read) {
+                $actions .= '<a href="' . route('service_sub_category.index', $Random_Id) . '" class="btn btn-secondary btn-sm me-1" title="Service Sub Category">';
+                $actions .= '<i class="bx bx-list-ul"></i>';
+                $actions .= '</a>';
+            }
 
-                    if($Is_Delete)
-                    {
-                        $actions .= '<a href="javascript:void(0);" onclick="Delete_Entity('.$id.')" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Delete</a>';
-                    }
-                $actions .= '</div>';
+            // Delete button (form)
+            if ($Is_Delete) {
+                $actions .= '<form action="' . route('service_category.delete') . '" method="POST" style="display:inline-block;" onsubmit="return confirm(\'Are you sure you want to delete this service category?\');">';
+                $actions .= csrf_field();
+                $actions .= '<input type="hidden" name="id" value="' . $id . '">';
+                $actions .= '<button type="submit" class="btn btn-danger btn-sm" title="Delete">';
+                $actions .= '<i class="bx bx-trash"></i>';
+                $actions .= '</button>';
+                $actions .= '</form>';
+            }
+
             $actions .= '</div>';
 
             $data_arr[$incKey]['action'] = $actions;
@@ -123,7 +132,7 @@ class ServiceCategoriesController extends Controller
         exit;
     }
 
-    public function Store(Request $request)
+    public function store(Request $request)
     {
         try
         {
@@ -171,7 +180,7 @@ class ServiceCategoriesController extends Controller
         }
     }
 
-    public function Update(Request $request)
+    public function update(Request $request)
     {
         try
         {
@@ -225,7 +234,7 @@ class ServiceCategoriesController extends Controller
         }
     }
 
-    public function Status(Request $request)
+    public function status(Request $request)
     {
         try
         {
@@ -265,7 +274,7 @@ class ServiceCategoriesController extends Controller
         }
     }
 
-    public function Destroy(Request $request)
+    public function destroy(Request $request)
     {
         try
         {
@@ -278,35 +287,23 @@ class ServiceCategoriesController extends Controller
             $this->deleteFile('/Uploads/Service_Categories/', $entity->File_Name ?? '');
             $validated_data['Is_Deleted'] = 1;
             $entity->update($validated_data);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Deleted successfully!',
-            ], 200);
+            return back()->with('success', 'Deleted successfully!');
         }
         catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return back()->with('error', 'An error occurred while deleting the service category: ' . $e->getMessage());
         }
         catch (\Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException  $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return back()->with('error', 'An error occurred while deleting the service category: ' . $e->getMessage());
         }
         catch (Exception $e)
         {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'An error occurred while updating the profile : ' . $e->getMessage(),
-            ], 404);
+            return back()->with('error', 'An error occurred while deleting the service category: ' . $e->getMessage());
         }
     }
 
-    public function Axios_Service_Sub_Category(Request $request)
+    public function axiosServiceSubCategory(Request $request)
     {
         try
         {

@@ -56,6 +56,7 @@ class SpecializationDataTable extends DataTable
                     ->setTableId('specialization-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([

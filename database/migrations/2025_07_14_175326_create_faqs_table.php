@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
+            $table->string('category_id');
             $table->text('question');
             $table->longText('answer');
             $table->boolean('status')->default(1); // 1 = active, 0 = inactive

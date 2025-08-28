@@ -318,4 +318,20 @@
         }
     }
 
+    if (!function_exists('getYearRange')) {
+        function getYearRange(int $startYear = 1970): array
+        {
+            $endYear = now()->year; // Laravel's Carbon 'now()'
+            return range($startYear, $endYear);
+        }
+    }
+    
+    if (!function_exists('getYearRangeDesc')) {
+        function getYearRangeDesc(int $startYear = 1970): array
+        {
+            $endYear = now()->year;
+            return range($endYear, $startYear);
+        }
+    }
+
 ?>

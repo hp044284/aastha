@@ -5,7 +5,6 @@ use App\Models\Setting;
 use App\Models\Enquiry;
 use App\Models\Service;
 use App\Models\ServiceCategory;
-use App\Models\ProductCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Request;
@@ -27,13 +26,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) 
         {
-
-            $service_categories = ServiceCategory::with('Children')->where('Parent_ID',0)->where('Status',1)->get();
-            // echo "<pre>";
+            $service_categories = ServiceCategory::with('service:id,title,slug,category_id')->where('Parent_ID',0)->where('Status',1)->select('id','Slug','Title','Icon','Subtitle','Parent_Id')->get()->toArray();
+            // echo '<pre>';
             // print_r($service_categories);
-            // echo "</pre>";
-            // die();
-            $product_categories = ProductCategory::where('Parent_ID',0)->where('Status',1)->get();
+            // die;
+
             $headerPages = Page::where('Menu_Display','Header')->where('Status',1)->get();
             $footerPages = Page::where('Menu_Display','Footer')->where('Status',1)->get();
             // Get Settings
@@ -47,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
             $services = Service::where('Status',1)->orderBy('id','Desc')->limit(5)->get();
 
             // Share the data with all views
-            $view->with(compact('headerPages', 'footerPages','settings','service_categories','product_categories','EnquiryCount','EnquiryNoti','url','services'));
+            $view->with(compact('headerPages', 'footerPages','settings','service_categories','EnquiryCount','EnquiryNoti','url','services'));
         });
     }
 }

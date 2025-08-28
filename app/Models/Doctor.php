@@ -26,6 +26,14 @@ class Doctor extends Model
     }
 
     /**
+     * Get the position associated with the doctor.
+     */
+    public function position()
+    {
+        return $this->hasOne(Position::class, 'id', 'position_id');
+    }
+
+    /**
      * Get the positions for the doctor.
      */
     public function positions()
@@ -39,6 +47,14 @@ class Doctor extends Model
     public function affiliations()
     {
         return $this->hasMany(DoctorAffiliation::class, 'doctor_id');
+    }
+
+    /**
+     * Get the doctor_specializations records for the doctor.
+     */
+    public function doctorSpecializations()
+    {
+        return $this->hasMany(DoctorSpecialization::class, 'doctor_id');
     }
 
     /**

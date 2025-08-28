@@ -70,6 +70,7 @@ class PositionDataTable extends DataTable
                     ->setTableId('position-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
+                    ->responsive(true)
                     ->orderBy(3)
                     ->selectStyleSingle()
                     ->buttons([

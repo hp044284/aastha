@@ -2,10 +2,6 @@
 @section('title','Pages')
 @section('content')
 @include('Admin.Elements.datatable-css')
-@php
-    $Auth_User = auth()->user();
-    $Is_Add = $Auth_User->HasPermission('Pages', 'Is_Add');
-@endphp
 <div class="page-wrapper">
     <div class="page-content">
         <!--breadcrumb-->
@@ -26,9 +22,9 @@
                     </ol>
                 </nav>
             </div>
-            @if($Is_Add)
-                <a href="{{ route('page.create') }}" class="btn btn-primary float-end">Add</a>
-            @endif
+            <div class="ms-auto">
+                <a href="{{ route('page.create') }}" class="btn btn-primary">Add</a>
+            </div>
         </div>
         <!--end breadcrumb-->
         <div class="main-body">

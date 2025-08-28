@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('testimonials', function (Blueprint $table) {
+        Schema::create('testimonials', function (Blueprint $table) 
+        {
             $table->increments('id');
-            $table->text('Message')->nullable();
-            $table->string('Position')->nullable();
-            $table->string('File_Name')->nullable();
-            $table->string('First_Name')->nullable();
-            $table->string('Last_Name')->nullable();
-            $table->string('Random_Id', 10)->nullable();
-            $table->boolean('Status')->nullable()->default(true);
-            $table->boolean('Is_Deleted')->nullable()->default(false);
-            $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrentOnUpdate()->useCurrent();
+            $table->string('name')->nullable();
+            $table->string('city')->nullable();
+            $table->unsignedTinyInteger('ratting')->nullable();
+            $table->text('message')->nullable();
+            $table->string('treatment')->nullable(); // "treatment" is spelled correctly
+            $table->boolean('status')->default(true)->nullable();
+            $table->date('treatment_date')->nullable();
+            $table->string('image')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -11,6 +11,15 @@ class PageController extends Controller
     public function index(Request $request)
     {
         $page = Page::where('Slug',$request->slug)->first();
+        if(!empty($request->slug))
+        {
+            switch ($request->slug) {
+                case 'vision':
+                    return view('web.page.mission-and-vision',compact('page'));
+                case 'about-us':
+                    return view('web.page.index',compact('page'));
+            }
+        }
         return view('web.page.index',compact('page'));
     }
     

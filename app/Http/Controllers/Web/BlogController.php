@@ -42,7 +42,7 @@ class BlogController extends Controller
                 }
             }
             
-            $blogs = $query->orderByDesc('id')->paginate(1);
+            $blogs = $query->orderByDesc('id')->paginate(3);
             $popularTags = Tag::withCount('blogs')->orderByDesc('blogs_count')->take(10)->get();
             $recentBlogs = Blog::where('Status', 1)->orderByDesc('id')->limit(3)->get();
             $blogCategories = BlogCategory::where('Parent_Id', 0)->where('Status', 1)->get();

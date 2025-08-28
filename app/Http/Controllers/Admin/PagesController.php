@@ -8,22 +8,22 @@ use App\Http\Controllers\Controller;
 class PagesController extends Controller
 {
     use FileUploadTrait;
-    public function Index(Request $request)
+    public function index(Request $request)
     {
-        return view('Admin.Pages.Index');
+        return view('Admin.pages.index');
     }
 
-    public function Create(Request $request)
+    public function create(Request $request)
     {
-        return view('Admin.Pages.Create');
+        return view('Admin.pages.create');
     }
 
-    public function Edit(Request $request, $Random_Id)
+    public function edit(Request $request, $Random_Id)
     {
         try
         {
             $entity = Page::where('Random_Id',$Random_Id)->firstOrFail();
-            return view('Admin.Pages.Edit',compact('entity'));
+            return view('Admin.pages.edit',compact('entity'));
         }
         catch (\PDOException $e)
         {
@@ -39,7 +39,7 @@ class PagesController extends Controller
         }
     }
 
-    public function Axios_Record(Request $request)
+    public function axiosRecord(Request $request)
     {
         ## Read value
         $draw = $request->get('draw');
@@ -86,13 +86,15 @@ class PagesController extends Controller
             $data_arr[$incKey]['Menu_Display'] = !empty($record->Menu_Display) ? $record->Menu_Display : '';
             $data_arr[$incKey]['Status'] = !empty($record->Status) ? '<button type="button" data-status="active" class="btn btn-success status-button" data-id="'.$id.'">Active</button>' : '<button type="button" class="btn btn-danger status-button" data-id="'.$id.'" data-status="inactive">Inactive</button>';
 
-            $actions = '<div class="col">';
-                $actions .= '<div class="btn-group" role="group" aria-label="Basic example">';
-                    if($Is_Edit)
-                    {
-                        $actions .= '<a href="'.route('page.edit',$Random_Id).'" class="btn btn-outline-secondary"><i class="bx bx-edit"></i>Edit</a>';
-                    }
-                $actions .= '</div>';
+            $actions = '<div class="btn-group" role="group" aria-label="Actions">';
+
+            // Edit button
+            if ($Is_Edit) {
+                $actions .= '<a href="' . route('page.edit', $Random_Id) . '" class="btn btn-primary btn-sm me-1" title="Edit">';
+                $actions .= '<i class="bx bx-edit"></i>';
+                $actions .= '</a>';
+            }
+            
             $actions .= '</div>';
 
             $data_arr[$incKey]['action'] = $actions;
@@ -109,7 +111,7 @@ class PagesController extends Controller
         exit;
     }
 
-    public function Store(Request $request)
+    public function store(Request $request)
     {
         try
         {
@@ -163,11 +165,10 @@ class PagesController extends Controller
         }
     }
 
-    public function Update(Request $request)
+    public function update(Request $request)
     {
         try
         {   
-            // return $request->all();
             $id = $Room_Id = $request->id;
             $validated_data = $request->validate([
                 'Title' => 'required|string|max:255',
@@ -178,7 +179,7 @@ class PagesController extends Controller
                 'Meta_Description' => 'required|string|max:500',
                 'Menu_Display' => 'required',
                 'Icons_Name' => 'nullable|string|max:255',
-                'File_Name' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'File_Name' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
                 
             ]);
             
@@ -224,7 +225,7 @@ class PagesController extends Controller
         }
     }
 
-    public function Status(Request $request)
+    public function status(Request $request)
     {
         try
         {
@@ -264,7 +265,7 @@ class PagesController extends Controller
         }
     }
 
-    public function Destroy(Request $request)
+    public function destroy(Request $request)
     {
         try
         {
