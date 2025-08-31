@@ -35,6 +35,9 @@ class AppServiceProvider extends ServiceProvider
             $footerPages = Page::where('Menu_Display','Footer')->where('Status',1)->get();
             // Get Settings
             $settings = Setting::where('Status',1)->pluck('Value','Name')->toArray();
+            // echo '<pre>';
+            // print_r($settings);
+            // die;
             $Query = Enquiry::query();
             $Query->where('Status',0);
             $EnquiryCount = $Query->count();

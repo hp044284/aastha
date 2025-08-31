@@ -73,82 +73,6 @@
     .phone-btn:hover {
       background-color: #fcaf17;
     }
-	
-	/* Custom Form Field Start ------*/
-
-.form-control-custom {
-    background-color: #f3f4f6;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 5px;
-}
-
-.form-control-custom:focus {
-    background-color: #f3f4f6;
-    border: none;
-    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
-}
-
-.btn-custom {
-    background-color: #1158e7;
-    border: none;
-    padding: 0.75rem;
-    font-weight: 500;
-    border-radius: 5px;
-}
-
-.btn-custom:hover {
-    background-color: #0284c7;
-}
-
-/*---Call To Action Button---*/
-
-    .side-buttons {
-      position: fixed;
-      top: 85%;
-      left: 10px; /* Thoda space left se */
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 1050;
-    }
-
-    .side-buttons a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 56px;
-      height: 56px;
-      background-color: #0d6efd;
-      color: white;
-      text-decoration: none;
-      border-radius: 50%; /* Full circle */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      font-size: 28px;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .side-buttons a:hover {
-      transform: scale(1.1);
-      text-decoration: none;
-    }
-
-    .whatsapp-btn {
-      background-color: #25D366;
-    }
-
-    .whatsapp-btn:hover {
-      background-color: #1ebe5d;
-    }
-
-    .phone-btn {
-      background-color: #fcaf17;
-    }
-
-    .phone-btn:hover {
-      background-color: #fcaf17;
-    }
 
     /*-- Job Apply --*/
     .drop-area {
@@ -168,3 +92,119 @@
     .drop-area input[type="file"] {
         display: none;
     }
+
+/* News Styles */
+.news-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.news-category {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.news-meta {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.news-meta i {
+    color: #9ca3af;
+}
+
+.news-link-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.news-link-icon:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.load-more-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    color: white;
+}
+
+.load-more-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.news-detail-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.news-description {
+    line-height: 1.8;
+    color: #374151;
+}
+
+.news-description img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.share-section .btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item a {
+    color: #6b7280;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: #3b82f6;
+}
+
+.breadcrumb-item.active {
+    color: #374151;
+}

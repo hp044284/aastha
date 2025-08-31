@@ -42,7 +42,7 @@ class NewsController extends Controller
                 $fileName = $file->hashName();
                 $fileType = $file->getClientMimeType();
                 $filePath = $file->storeAs('uploads/news', $fileName, 'public'); // Laravel storage method
-                $validated['file_name'] = $fileName;
+                $validated['file_name'] = $filePath;
                 $validated['file_type'] = $fileType;
             }
             
@@ -99,7 +99,7 @@ class NewsController extends Controller
                 $fileName = $file->hashName();
                 $fileType = $file->getClientMimeType();
                 $filePath = $file->storeAs('uploads/news', $fileName, 'public'); // Laravel storage method
-                $validated['file_name'] = $fileName;
+                $validated['file_name'] = $filePath;
                 $validated['file_type'] = $fileType;
             }
             $news->update($validated);

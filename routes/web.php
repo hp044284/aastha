@@ -4,6 +4,8 @@ use App\Http\Controllers\Web\FaqController;
 use App\Http\Controllers\Web\BlogController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\PageController;
+use App\Http\Controllers\Web\NewsController;
+use App\Http\Controllers\Web\TeamController;
 use App\Http\Controllers\Web\DoctorController;
 use App\Http\Controllers\Web\EnquiryController;
 use App\Http\Controllers\Web\ContactController;
@@ -77,3 +79,16 @@ Route::prefix('faqs')->controller(FaqController::class)->group(function ()
 {
     Route::get('/', 'index')->name('web.faq.index');
 });
+
+Route::prefix('news')->controller(NewsController::class)->group(function ()
+{
+    Route::get('/', 'index')->name('web.news.index');
+    Route::get('/load-more', 'loadMore')->name('web.news.load-more');
+    Route::get('/{id}', 'show')->name('web.news.show');
+});
+
+Route::prefix('teams')->controller(TeamController::class)->group(function ()
+{
+    Route::get('/', 'index')->name('web.teams.index');
+});
+

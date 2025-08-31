@@ -21,6 +21,7 @@ class DepartmentDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addIndexColumn()
             ->editColumn('created_at', function($row) {
                 return Carbon::parse($row->created_at)->format('d/m/Y h:i A');
             })
@@ -56,7 +57,7 @@ class DepartmentDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->responsive(true)
-                    ->orderBy(1)
+                    ->orderBy(2)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -74,7 +75,11 @@ class DepartmentDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')
+            ->title('#')
+            ->searchable(false)
+            ->orderable(false)
+            ->exportable(false),
             Column::make('name'),
             Column::make('created_at'),
             Column::computed('action')

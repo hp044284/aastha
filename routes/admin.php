@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\{
     ServiceCategoriesController,
     BlogSubCategoriesController,
     ServiceSubCategoriesController,
+    TeamController,
 };
 
 
@@ -199,12 +200,12 @@ use App\Http\Controllers\Admin\{
     });
 
     Route::middleware(['admin'])->group(function () {
+        Route::resource('news', NewsController::class);
+        Route::resource('teams', TeamController::class);
+        Route::resource('events', EventController::class);
         Route::resource('doctors', DoctorController::class);
         Route::resource('services', ServicesController::class);
         Route::resource('positions', PositionController::class);
-        Route::resource('events', EventController::class);
-
-    Route::resource('news', NewsController::class);
         Route::resource('departments', DepartmentController::class);
         Route::resource('testimonials', TestimonialsController::class);
         Route::resource('case-studies', CaseStudyController::class);

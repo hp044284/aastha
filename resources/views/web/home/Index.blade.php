@@ -172,6 +172,7 @@
     </section>
     <!-- Flat Services Section End-->
 
+    @if($services->isNotEmpty())
     <!-- Services Section -->
     <section class="services-section py-5">
         <div class="container-fluid px-4">
@@ -194,71 +195,24 @@
                 
                 <div class="slider-wrapper overflow-hidden">
                     <div class="slider-track" id="servicesSlider">
+
+                        @foreach($services as $service)
                         <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-1.html')">
+                            <div class="service-card">
                                 <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Best Hospitals Award">
+                                    <img 
+                                        src="{{ !empty($service->file_name) ? asset('storage/' . $service->file_name) : asset('Uploads/image_placeholder.jpg') }}" 
+                                        alt="{{ $service->title ?? 'Service' }}"
+                                        onerror="this.onerror=null;this.src='{{ asset('Uploads/image_placeholder.jpg') }}';"
+                                    >
                                 </div>
                                 <div class="service-content">
-                                    <h4>Health Care Survey Best Hospitals National</h4>
+                                    <h4>{{ $service->title ?? 'N/A' }}</h4>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                         
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-2.html')">
-                                <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Hospital Management Conference">
-                                </div>
-                                <div class="service-content">
-                                    <h4>Hospital Management Conference</h4>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-3.html')">
-                                <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Medscape India Awards">
-                                </div>
-                                <div class="service-content">
-                                    <h4>Medscape India Awards Recognizing Excellence</h4>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-4.html')">
-                                <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Healthcare Leadership Awards">
-                                </div>
-                                <div class="service-content">
-                                    <h4>ABP News Healthcare Leadership Awards</h4>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-5.html')">
-                                <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Quality Excellence">
-                                </div>
-                                <div class="service-content">
-                                    <h4>Quality Excellence in Patient Care</h4>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="service-card" onclick="navigateTo('service-6.html')">
-                                <div class="service-image">
-                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Medical Innovation">
-                                </div>
-                                <div class="service-content">
-                                    <h4>Medical Innovation Excellence Award</h4>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
@@ -268,482 +222,251 @@
             </div>
         </div>
     </section>
+    @endif
 
-    <!-- Case Studies Section -->
-    <section class="case-studies-section py-5">
-        <div class="container-fluid px-4">
-            <div class="row mb-1 wrapper">
-                <div class="col-lg-8">
-                    <h2 class="section-title">Welcoming lives with Expertise</h2>
-                    <p class="section-description">Beautiful stories of Hope, Resilience and Recovery shared by families who have experienced our Excellence</p>
-                </div>
-                <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
-                    <a href="case-studies.html" class="view-all-btn">
-                        View All <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="slider-container position-relative wrapper">
-                <button class="slider-arrow slider-arrow-left" id="caseStudiesLeft">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="slider-wrapper overflow-hidden ">
-                    <div class="slider-track" id="caseStudiesSlider">
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="case-study-card" onclick="navigateTo('case-study-nirvaan.html')">
-                                <div class="case-study-image">
-                                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Meet Nirvaan">
-                                </div>
-                                <div class="case-study-content">
-                                    <h4>Meet Nirvaan</h4>
-                                    <p>Miracle baby, born in 22nd week, beats all odds after spending 132 days in NICU</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="case-study-card" onclick="navigateTo('case-study-varad.html')">
-                                <div class="case-study-image">
-                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Meet Varad">
-                                </div>
-                                <div class="case-study-content">
-                                    <h4>Meet Varad</h4>
-                                    <p>2.5 years old who survived rare Pneumonia after 150+ days on ventilator with expert care</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="case-study-card" onclick="navigateTo('case-study-shivanya.html')">
-                                <div class="case-study-image">
-                                    <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Meet Shivanya">
-                                </div>
-                                <div class="case-study-content">
-                                    <h4>Meet Shivanya</h4>
-                                    <p>Born at 24 weeks, she is one of the youngest babies in India to survive extreme preterm birth</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="case-study-card" onclick="navigateTo('case-study-arjun.html')">
-                                <div class="case-study-image">
-                                    <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Meet Arjun">
-                                </div>
-                                <div class="case-study-content">
-                                    <h4>Meet Arjun</h4>
-                                    <p>Complex congenital heart surgery performed successfully on 6-month-old baby with complete recovery</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="case-study-card" onclick="navigateTo('case-study-ananya.html')">
-                                <div class="case-study-image">
-                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Meet Ananya">
-                                </div>
-                                <div class="case-study-content">
-                                    <h4>Meet Ananya</h4>
-                                    <p>Successful treatment of rare genetic disorder with innovative therapy and dedicated medical care</p>
-                                </div>
-                            </div>
-                        </div>
+    @if($casestudies->isNotEmpty())
+        <!-- Case Studies Section -->
+        <section class="case-studies-section py-5">
+            <div class="container-fluid px-4">
+                <div class="row mb-1 wrapper">
+                    <div class="col-lg-8">
+                        <h2 class="section-title">Welcoming lives with Expertise</h2>
+                        <p class="section-description">Beautiful stories of Hope, Resilience and Recovery shared by families who have experienced our Excellence</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
+                        <a href="{{ route('web.case-studies.index') }}" class="view-all-btn">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <button class="slider-arrow slider-arrow-right" id="caseStudiesRight">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+                <div class="slider-container position-relative wrapper">
+                    <button class="slider-arrow slider-arrow-left" id="caseStudiesLeft">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="slider-wrapper overflow-hidden ">
+                        <div class="slider-track" id="caseStudiesSlider">
 
-    <!-- Our Team Section -->
-    <section class="team-section py-5">
-        <div class="container-fluid px-4">
-            <div class="row mb-1 wrapper">
-                <div class="col-lg-8">
-                    <h2 class="section-title">Our Expert Team</h2>
-                    <p class="section-description">Meet the faces behind our excellence. Our dedicated team of highly qualified professionals to assist you on the journey to better health.</p>
-                </div>
-                <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
-                    <a href="our-team.html" class="view-all-btn">
-                        View All <i class="fas fa-arrow-right"></i>
-                    </a>
+                            @foreach($casestudies as $casestudy)
+                                <div class="col-lg-3 col-md-6 slider-item">
+                                    <div class="case-study-card">
+                                        <div class="case-study-image">
+                                            <img 
+                                                src="{{ !empty($casestudy->image) ? asset('storage/' . $casestudy->image) : asset('Uploads/image_placeholder.jpg') }}" 
+                                                alt="{{ $casestudy->title ?? 'Case Study' }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('Uploads/image_placeholder.jpg') }}';"
+                                            >
+                                        </div>
+                                        <div class="case-study-content">
+                                            <h4>{{ $casestudy->title ?? 'N/A' }}</h4>
+                                            <p>
+                                                {{ $casestudy->subtitle ?? Str::limit(strip_tags($casestudy->description), 100) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                    
+                    <button class="slider-arrow slider-arrow-right" id="caseStudiesRight">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
-            
-            <div class="slider-container position-relative wrapper">
-                <button class="slider-arrow slider-arrow-left" id="teamLeft">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="slider-wrapper overflow-hidden">
-                    <div class="slider-track" id="teamSlider">
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="team-card" onclick="navigateTo('doctor-nandkishor.html')">
-                                <div class="team-image">
-                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Nandkishor Kabra">
-                                </div>
-                                <div class="team-content">
-                                    <h4>Dr. Nandkishor Kabra</h4>
-                                    <p class="designation">Director, Neonatal ICU</p>
-                                    <p class="experience">25+ Years Experience</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="team-card" onclick="navigateTo('doctor-deepak.html')">
-                                <div class="team-image">
-                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Deepak Shivpuri">
-                                </div>
-                                <div class="team-content">
-                                    <h4>Dr. Deepak Shivpuri</h4>
-                                    <p class="designation">Sr. Director & HOD – Pediatrics</p>
-                                    <p class="experience">30+ Years Experience</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="team-card" onclick="navigateTo('doctor-shobha.html')">
-                                <div class="team-image">
-                                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Shobha Sharma">
-                                </div>
-                                <div class="team-content">
-                                    <h4>Dr. Shobha Sharma</h4>
-                                    <p class="designation">Consultant General Pediatrics</p>
-                                    <p class="experience">20+ Years Experience</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="team-card" onclick="navigateTo('doctor-sunita.html')">
-                                <div class="team-image">
-                                    <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Sunita Shishodia">
-                                </div>
-                                <div class="team-content">
-                                    <h4>Dr. Sunita Shishodia</h4>
-                                    <p class="designation">Sr. Director & HOD - Obstetrics</p>
-                                    <p class="experience">28+ Years Experience</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-3 col-md-6 slider-item">
-                            <div class="team-card" onclick="navigateTo('doctor-rajesh.html')">
-                                <div class="team-image">
-                                    <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Rajesh Kumar">
-                                </div>
-                                <div class="team-content">
-                                    <h4>Dr. Rajesh Kumar</h4>
-                                    <p class="designation">Senior Consultant - Cardiology</p>
-                                    <p class="experience">22+ Years Experience</p>
-                                </div>
-                            </div>
-                        </div>
+        </section>
+
+    @endif
+
+    @if($teams->isNotEmpty())
+        <!-- Our Team Section -->
+        <section class="team-section py-5">
+            <div class="container-fluid px-4">
+                <div class="row mb-1 wrapper">
+                    <div class="col-lg-8">
+                        <h2 class="section-title">Our Expert Team</h2>
+                        <p class="section-description">Meet the faces behind our excellence. Our dedicated team of highly qualified professionals to assist you on the journey to better health.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
+                        <a href="our-team.html" class="view-all-btn">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <button class="slider-arrow slider-arrow-right" id="teamRight">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
+                <div class="slider-container position-relative wrapper">
+                    <button class="slider-arrow slider-arrow-left" id="teamLeft">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="slider-wrapper overflow-hidden">
+                        <div class="slider-track" id="teamSlider">
 
-    <!-- Testimonial Section -->
-    <section class="testimonials-section py-5">
-        <div class="container-fluid px-4">
-            <div class="row mb-1 wrapper">
-                <div class="col-lg-8">
-                    <h2 class="section-title">What Our Families Say</h2>
-                    <p class="section-description">Real stories from families who have experienced our compassionate care and medical excellence</p>
+                            @foreach($teams as $team)
+                                <div class="col-lg-3 col-md-6 slider-item">
+                                    <div class="team-card">
+                                        <div class="team-image">
+                                            <img 
+                                                src="{{ !empty($team->file_name) ? asset('storage/' . $team->file_name) : 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=300&fit=crop&crop=face' }}" 
+                                                alt="{{ $team->name ?? 'Team Member' }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('Uploads/image_placeholder.jpg') }}';"
+                                            >
+                                        </div>
+                                        <div class="team-content">
+                                            <h4>{{ $team->name ?? 'N/A' }}</h4>
+                                            <p class="designation">
+                                                {{ ucfirst(optional($team->position)->title ?? 'N/A') }}
+                                            </p>
+                                            <p class="experience">
+                                                @if(!empty($team->experience))
+                                                    {{ $team->experience }} Years Experience
+                                                @else
+                                                    Experience not specified
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                    
+                    <button class="slider-arrow slider-arrow-right" id="teamRight">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
-                    <a href="our-team.html" class="view-all-btn">
-                        View All <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
             </div>
+        </section>
+    @endif
 
-            <div class="testimonials-container position-relative wrapper">
-                <button class="testimonial-arrow testimonial-arrow-left" id="testimonialsLeft">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="testimonials-wrapper overflow-hidden">
-                    <div class="testimonials-track" id="testimonialsSlider">
-                        <!-- Testimonial 1 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-1')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Nirvaan's Family">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-play"></i>
+    @if($testimonials->isNotEmpty())
+        <!-- Testimonial Section -->
+        <section class="testimonials-section py-5">
+            <div class="container-fluid px-4">
+                <div class="row mb-1 wrapper">
+                    <div class="col-lg-8">
+                        <h2 class="section-title">What Our Families Say</h2>
+                        <p class="section-description">Real stories from families who have experienced our compassionate care and medical excellence</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
+                        <a href="our-team.html" class="view-all-btn">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="testimonials-container position-relative wrapper">
+                    <button class="testimonial-arrow testimonial-arrow-left" id="testimonialsLeft">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="testimonials-wrapper overflow-hidden">
+                        <div class="testimonials-track" id="testimonialsSlider">
+
+                            @foreach($testimonials as $testimonial)
+                                <div class="testimonial-item">
+                                    <div class="testimonial-card">
+                                        <div class="testimonial-media">
+                                            <img src="{{ $testimonial->image ? asset('storage/'.$testimonial->image) : asset('web-assets/images/default-user.png') }}" alt="{{ $testimonial->name }}'s Family" onerror="this.onerror=null;this.src='{{ asset('web-assets/images/default-user.png') }}';">
+                                            <div class="play-overlay">
+                                                <div class="play-button">
+                                                    @if(Str::contains(strtolower($testimonial->treatment), ['video', 'youtube', 'mp4']))
+                                                        <i class="fas fa-play"></i>
+                                                    @else
+                                                        <i class="fas fa-camera"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-type">
+                                                @if(Str::contains(strtolower($testimonial->treatment), ['video', 'youtube', 'mp4']))
+                                                    <i class="fas fa-video"></i>
+                                                    <span>Video Testimonial</span>
+                                                @else
+                                                    <i class="fas fa-image"></i>
+                                                    <span>Photo Story</span>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-video"></i>
-                                        <span>Video Testimonial</span>
+                                        <div class="testimonial-content">
+                                            <div class="quote-icon">
+                                                <i class="fas fa-quote-left"></i>
+                                            </div>
+                                            <h4 class="testimonial-title">
+                                                {{ $testimonial->treatment ?? 'Patient Story' }}
+                                            </h4>
+                                            <p class="testimonial-description">
+                                                {!! $testimonial->message !!}
+                                            </p>
+                                            <div class="testimonial-author">
+                                                <div class="author-info">
+                                                    <h5>{{ $testimonial->name }}</h5>
+                                                    <span>
+                                                        {{ $testimonial->city ? $testimonial->city : '' }}
+                                                        @if($testimonial->treatment_date)
+                                                            | {{ \Carbon\Carbon::parse($testimonial->treatment_date)->format('M Y') }}
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="rating">
+                                                    @php
+                                                        $rating = (int) $testimonial->ratting;
+                                                    @endphp
+                                                    @for($i = 0; $i < 5; $i++)
+                                                        @if($i < $rating)
+                                                            <i class="fas fa-star"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Miracle Recovery of Baby Nirvaan</h4>
-                                    <p class="testimonial-description">Our premature baby was born at 22 weeks. The NICU team's dedication and advanced care saved our son's life. Today, Nirvaan is a healthy, happy child.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Priya & Rajesh Sharma</h5>
-                                            <span>Parents of Baby Nirvaan</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    
+                    <button class="testimonial-arrow testimonial-arrow-right" id="testimonialsRight">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Testimonial Stats -->
+                <div class="testimonial-stats mt-5">
+                    <div class="row g-4 wrapper">
+                        <div class="col-6 col-md-3">
+                            <div class="stat-item">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Happy Families</div>
                             </div>
                         </div>
-
-                        <!-- Testimonial 2 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-2')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Varad's Family">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-video"></i>
-                                        <span>Video Testimonial</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Varad's Fight Against Pneumonia</h4>
-                                    <p class="testimonial-description">When our 2.5-year-old was diagnosed with rare pneumonia, we were devastated. The pediatric team's expertise and 24/7 care brought our son back to us.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Sunita & Vikram Patel</h5>
-                                            <span>Parents of Varad</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-item">
+                                <div class="stat-number">4.9/5</div>
+                                <div class="stat-label">Average Rating</div>
                             </div>
                         </div>
-
-                        <!-- Testimonial 3 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-3')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Shivanya's Family">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-camera"></i>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-image"></i>
-                                        <span>Photo Story</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Shivanya's Preterm Birth Success</h4>
-                                    <p class="testimonial-description">Born at just 24 weeks, our daughter's survival seemed impossible. The neonatal specialists worked miracles. She's now a thriving, beautiful child.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Meera & Arjun Singh</h5>
-                                            <span>Parents of Shivanya</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-item">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Satisfaction Rate</div>
                             </div>
                         </div>
-
-                        <!-- Testimonial 4 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-4')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Arjun's Family">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-video"></i>
-                                        <span>Video Testimonial</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Successful Heart Surgery for Baby Arjun</h4>
-                                    <p class="testimonial-description">Our 6-month-old needed complex heart surgery. The cardiac team's skill and compassionate care gave our baby a new lease on life. Forever grateful.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Kavita & Rohit Gupta</h5>
-                                            <span>Parents of Baby Arjun</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial 5 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-5')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ananya's Family">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-camera"></i>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-image"></i>
-                                        <span>Photo Story</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Ananya's Genetic Disorder Treatment</h4>
-                                    <p class="testimonial-description">Diagnosed with a rare genetic condition, we found hope at Aastha Hospital. The innovative treatment and caring staff helped our daughter overcome challenges.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Deepika & Sanjay Jain</h5>
-                                            <span>Parents of Ananya</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial 6 -->
-                        <div class="testimonial-item">
-                            <div class="testimonial-card" onclick="playTestimonial('testimonial-6')">
-                                <div class="testimonial-media">
-                                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Maternity Care">
-                                    <div class="play-overlay">
-                                        <div class="play-button">
-                                            <i class="fas fa-play"></i>
-                                        </div>
-                                    </div>
-                                    <div class="testimonial-type">
-                                        <i class="fas fa-video"></i>
-                                        <span>Video Testimonial</span>
-                                    </div>
-                                </div>
-                                <div class="testimonial-content">
-                                    <div class="quote-icon">
-                                        <i class="fas fa-quote-left"></i>
-                                    </div>
-                                    <h4 class="testimonial-title">Exceptional Maternity Care Experience</h4>
-                                    <p class="testimonial-description">From pregnancy to delivery, the maternity team provided outstanding care. The facilities, staff, and medical expertise made our journey memorable and safe.</p>
-                                    <div class="testimonial-author">
-                                        <div class="author-info">
-                                            <h5>Ritu & Amit Sharma</h5>
-                                            <span>New Parents</span>
-                                        </div>
-                                        <div class="rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Video Stories</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <button class="testimonial-arrow testimonial-arrow-right" id="testimonialsRight">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
-
-            <!-- Testimonial Stats -->
-            <div class="testimonial-stats mt-5">
-                <div class="row g-4 wrapper">
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Happy Families</div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="stat-number">4.9/5</div>
-                            <div class="stat-label">Average Rating</div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">Satisfaction Rate</div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="stat-item">
-                            <div class="stat-number">100+</div>
-                            <div class="stat-label">Video Stories</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
 
     <!-- Contact Us Section -->
@@ -907,77 +630,62 @@
         </div>
     </section>
 
-    <!-- Blog & News Section -->
-    <section class="blog-news-section py-5">
-        <div class="container-fluid px-4">
-            <div class="row mb-1 wrapper">
-                <div class="col-lg-8">
-                    <h2 class="section-title">Latest Blog & News</h2>
-                    <p class="section-description">Stay updated with the latest medical insights, health tips, and hospital news from our expert team of healthcare professionals.</p>
-                </div>
-                <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
-                    <a href="blog-news.html" class="view-all-btn">
-                        View All <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="row g-4 wrapper">
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                    <div class="blog-card" onclick="navigateTo('blog-1.html')">
-                        <div class="blog-image">
-                            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Neonatal Care">
-                            <div class="blog-category">Medical Insights</div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date"><i class="fas fa-calendar"></i> March 15, 2024</span>
-                                <span class="blog-author"><i class="fas fa-user"></i> Dr. Nandkishor Kabra</span>
-                            </div>
-                            <h4>Advanced Neonatal Care: Saving Premature Lives</h4>
-                            <p>Discover the latest advancements in neonatal intensive care and how our NICU team provides life-saving treatment for premature babies.</p>
-                            <a href="blog-1.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                        </div>
+    @if($blogs->isNotEmpty())
+        <!-- Blog & News Section -->
+        <section class="blog-news-section py-5">
+            <div class="container-fluid px-4">
+                <div class="row mb-1 wrapper">
+                    <div class="col-lg-8">
+                        <h2 class="section-title">Latest Blog & News</h2>
+                        <p class="section-description">Stay updated with the latest medical insights, health tips, and hospital news from our expert team of healthcare professionals.</p>
+                    </div>
+                    <div class="col-lg-4 text-lg-end text-lg-end text-md-start mb-3 mb-lg-0">
+                        <a href="blog-news.html" class="view-all-btn">
+                            View All <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
                 
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                    <div class="blog-card" onclick="navigateTo('blog-2.html')">
-                        <div class="blog-image">
-                            <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pediatric Surgery">
-                            <div class="blog-category">Health Tips</div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date"><i class="fas fa-calendar"></i> March 12, 2024</span>
-                                <span class="blog-author"><i class="fas fa-user"></i> Dr. Deepak Shivpuri</span>
+                <div class="row g-4 wrapper">
+                    @foreach($blogs as $blog)
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <div class="blog-card">
+                                <div class="blog-image">
+                                    <img 
+                                        src="{{ !empty($blog->File_Name) ? asset('Uploads/Blogs/' . $blog->File_Name) : asset('Uploads/image_placeholder.jpg') }}" 
+                                        alt="{{ $blog->Meta_Title ?? $blog->Title ?? 'Blog Image' }}"
+                                        onerror="this.onerror=null;this.src='{{ asset('Uploads/image_placeholder.jpg') }}';"
+                                    >
+                                    <div class="blog-category">
+                                        {{ $blog->category->Title ?? 'General' }}
+                                    </div>
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-meta">
+                                        <span class="blog-date">
+                                            <i class="fas fa-calendar"></i> 
+                                            {{ \Carbon\Carbon::parse($blog->created_at)->format('M d, Y') }}
+                                        </span>
+                                        @if(!empty($blog->author))
+                                            <span class="blog-author">
+                                                <i class="fas fa-user"></i> {{ $blog->author }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <h4>{{ $blog->Title ?? 'Untitled Blog' }}</h4>
+                                    <p>
+                                        {{ Str::limit(strip_tags($blog->Description), 120) }}
+                                    </p>
+                                    <a href="{{ route('web.blogs.detail',$blog->Slug) }}" class="read-more">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <h4>Pediatric Surgery: When Your Child Needs Operation</h4>
-                            <p>Understanding when pediatric surgery is necessary and how to prepare your child for a successful surgical experience with minimal stress.</p>
-                            <a href="blog-2.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                    <div class="blog-card" onclick="navigateTo('blog-3.html')">
-                        <div class="blog-image">
-                            <img src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Women Health">
-                            <div class="blog-category">Hospital News</div>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span class="blog-date"><i class="fas fa-calendar"></i> March 10, 2024</span>
-                                <span class="blog-author"><i class="fas fa-user"></i> Dr. Sunita Shishodia</span>
-                            </div>
-                            <h4>Women's Health: Comprehensive Care for Every Stage</h4>
-                            <p>Learn about our comprehensive women's health services from adolescence through menopause, ensuring optimal health at every life stage.</p>
-                            <a href="blog-3.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                    @endforeach
+                    
                 </div>
             </div>
-        </div>
-    </section>
-    
+        </section>
+    @endif
 </x-layout>

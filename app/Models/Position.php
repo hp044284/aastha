@@ -39,4 +39,12 @@ class Position extends Model
         'end_year' => 'year',
         'doctor_id' => 'integer',
     ];
+
+    /**
+     * Get the team members for this position
+     */
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'positions_id');
+    }
 }

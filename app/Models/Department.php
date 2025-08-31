@@ -20,4 +20,12 @@ class Department extends Model
     {
         return SlugOptions::create()->generateSlugsFrom('name')->saveSlugsTo('slug');
     }
+
+    /**
+     * Get the team members for this department
+     */
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
 }

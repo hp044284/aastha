@@ -60,7 +60,12 @@
         <div class="row align-items-center w-100">
             <div class="col-lg-2 col-6">
                 <a class="navbar-brand" href="home">
-                    <img src="img/logos/logo.png" alt="Aastha Hospital Logo" class="logo-img" />
+                    <img 
+                        src="{{ !empty($settings['Site_Logo']) ? asset('Uploads/Settings/' . $settings['Site_Logo']) : asset('img/logos/logo.png') }}" 
+                        alt="Aastha Hospital Logo" 
+                        class="logo-img"
+                        onerror="this.onerror=null;this.src='{{ asset('img/logos/logo.png') }}';"
+                    />
                 </a>
             </div>
 
@@ -73,9 +78,9 @@
                         </a>
                         <div class="dropdown-menu-custom" id="aboutDropdownMenu">
                             <div class="dropdown-content">
-                                <a class="dropdown-item" href="{{ route('home','about-us') }}"> <i class="fas fa-info-circle me-2"></i>About Us </a>
-                                <a class="dropdown-item" href="{{ route('home','vision') }}"> <i class="fas fa-eye me-2"></i>Mission & Vision </a>
-                                <a class="dropdown-item" href="news-and-media"> <i class="fas fa-newspaper me-2"></i>News & Media </a>
+                                <a class="dropdown-item" href="{{ route('web.page.index','about-us') }}"> <i class="fas fa-info-circle me-2"></i>About Us </a>
+                                <a class="dropdown-item" href="{{ route('web.page.index','vision') }}"> <i class="fas fa-eye me-2"></i>Mission & Vision </a>
+                                <a class="dropdown-item" href="{{ route('web.news.index') }}"> <i class="fas fa-newspaper me-2"></i>News & Media </a>
                                 <a class="dropdown-item" href="{{ route('web.doctors.our-teams') }}"> <i class="fas fa-users me-2"></i>Our Team </a>
                                 <a class="dropdown-item" href="{{ route('web.doctors.index') }}"> <i class="fas fa-user-md me-2"></i>Our Doctors </a>
                             </div>
